@@ -19,10 +19,15 @@
             <!--下方内容信息-->
             <div class="swiper-container" id="swiper-container2">
                 <div class="swiper-wrapper navbar">
-                    <a class="swiper-slide text-center swiper-no-swiping active">聊天室</a>
-                    <a class="swiper-slide text-center swiper-no-swiping">主播推荐</a>
-                    <a class="swiper-slide text-center swiper-no-swiping">边看边买</a>
-                    <div class="line"></div>
+                    <div class="swiper-slide text-center swiper-no-swiping">
+                        <a class="active">聊天室</a>
+                    </div>
+                    <div class="swiper-slide tuijian text-center swiper-no-swiping">
+                        <a>主播推荐</a>
+                    </div>
+                    <div class="swiper-slide text-center swiper-no-swiping">
+                        <a>边看边买</a>
+                    </div>
                 </div>
             </div>
             <div class="swiper-container" id="swiper-container3">
@@ -236,15 +241,18 @@
                 });
                 $('.swiper-no-swiping').on('tap',function () {
                     mySwiper3.slideTo($(this).index());
+                    $('.swiper-no-swiping a').removeClass('active');
+                    $(this).children('a').addClass('active');
                 });
                 var mySwiper3 = new Swiper('#swiper-container3',{
+                    speed:500,
                     onSlideChangeStart: function(){
                         updateNavPosition()
                     }
                 });
                 function updateNavPosition(){
-                    $('#swiper-container2 .active-nav').removeClass('active-nav');
-                    var activeNav = $('#swiper-container2 .swiper-slide').eq(mySwiper3.activeIndex).addClass('active-nav');
+                    $('#swiper-container2 .active').removeClass('active');
+                    var activeNav = $('#swiper-container2 .swiper-slide').eq(mySwiper3.activeIndex).children('a').addClass('active');
 
                     if (!activeNav.hasClass('swiper-slide-visible')) {
                         if (activeNav.index()>mySwiper2.activeIndex) {

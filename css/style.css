@@ -16,20 +16,17 @@ img{
     background-color: #fff;
     padding: .3rem 0;
 }
+.live .swiper-container .navbar a{
+    padding: .3rem .5rem;
+    height: 100%;
+    -webkit-transition: all .2s ease-in;
+    transition: all .2s ease-in;
+}
 .live .active{
     color: #ff5a5a !important;
+    border-bottom: 2px solid #ff5a5a;
 }
-.live .line{
-    position: absolute;
-    border-bottom: 0;
-    left: 20.335px;
-    bottom: 0;
-    height: 3px;
-    background-color: #ff5a5a;
-    border-radius: 999px;
-    width: 80px;
-}
-.live .swiper-container a{
+.live .navbar a{
     color: #707070;
 }
 .live .bg_black{
@@ -49,6 +46,10 @@ img{
 .live .communication{
     padding-left: 0;
 }
+.live .tuijian{
+    border-left: 1px solid #f5f5f5;
+    border-right: 1px solid #f5f5f5;
+}
 .live .communication li span{
     color: #fff;
     padding: .2rem .6rem;
@@ -56,7 +57,7 @@ img{
     list-style: none;
 }
 .live .communication li{
-    margin-top: .5rem;
+    margin-top: .8rem;
 }
 .color_r{
     background-color: #f66860;
@@ -160,7 +161,7 @@ img{
 }
 .live .look{
     background-color: #4cadff;
-    color: #fff !important;
+    color: #fff;
     font-size: .7rem;
     padding: .2rem .5rem;
     border-radius: .2rem;
