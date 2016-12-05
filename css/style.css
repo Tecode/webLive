@@ -1,0 +1,182 @@
+body{
+    font-family: "Microsoft JhengHei";
+}
+/*直播观看页面*/
+img{
+    pointer-events: none;
+}
+.live .swiper-wrapper .swiper-slide{
+    font-size: .9rem;
+}
+.live .video_box img{
+    display: block;
+}
+.live .swiper-container .navbar{
+    position: relative;
+    background-color: #fff;
+    padding: .3rem 0;
+}
+.live .active{
+    color: #ff5a5a !important;
+}
+.live .line{
+    position: absolute;
+    border-bottom: 0;
+    left: 20.335px;
+    bottom: 0;
+    height: 3px;
+    background-color: #ff5a5a;
+    border-radius: 999px;
+    width: 80px;
+}
+.live .swiper-container a{
+    color: #707070;
+}
+.live .bg_black{
+    background-color: #3a3a3a;
+    height: 64vh;
+    overflow: hidden;
+}
+.live .living span{
+    font-size: .8rem;
+    color: #fff;
+}
+.live .live_status{
+    background-color: #f5493f;
+    padding: .2em .4em;
+    border-radius: .2rem;
+}
+.live .communication{
+    padding-left: 0;
+}
+.live .communication li span{
+    color: #fff;
+    padding: .2rem .6rem;
+    border-radius: 999px;
+    list-style: none;
+}
+.live .communication li{
+    margin-top: .5rem;
+}
+.color_r{
+    background-color: #f66860;
+    color: #fff;
+}
+.color_g{
+    background-color: #474747;
+    color: #8c8c8c;
+}
+.color_b{
+    background-color: #1e1e1e;
+    color: #fff;
+}
+.live .click_good{
+    width: 44px;
+    position: fixed;
+    right: 1rem;
+    bottom: 3rem;
+}
+.live .speek input{
+    width: 8em;
+    height: 1.5rem;
+    border: none;
+    background-color: #2a2a2a;
+    border-radius: 999px;
+    color: #fff;
+}
+.live .speek{
+    position: relative;
+    bottom: 0;
+    right: 6em;
+}
+/*推送商品*/
+.live .gutter{
+    margin-top: .2rem;
+    padding-top: .5rem;
+    padding-bottom: .2rem;
+    margin-left: 3rem;
+    margin-right: .5rem;
+    background-color: #fff;
+    border-radius: .2rem;
+}
+.live .gutter .col-66{
+    padding-right: .5rem;
+}
+.live .list-block ul{
+    background-color: #f0f0f0;
+}
+.live .gutter .pull-right{
+    margin-top: .6rem;
+    margin-right: .5rem;
+}
+.live .minicon{
+    width: 14px;
+    position: absolute;
+    left: 2.5rem;
+}
+.live .portrait{
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 999px;
+    overflow: hidden;
+    position: absolute;
+    top: 1.8rem;
+    left: .5rem;
+}
+.live .push_store .discrip{
+    font-size: .70rem;
+    display: -webkit-box;
+    margin-top: .1rem;
+    line-height: 1.3em;
+    height: 2.4em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
+}
+.live .push_store p{
+    text-indent: 3rem;
+    padding-top: .4rem;
+    margin: 0;
+    font-size: .7rem;
+}
+.live .count{
+    font-size: .75rem;
+    color: #4c4c4c;
+}
+.live .much{
+    font-size: .80rem;
+    color: #f02b2b;
+    font-weight: 500;
+    margin-top: -0.2rem;
+}
+.icon-shopcar{
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: url("../img/shop_car.png") no-repeat;
+    background-size: 1.5rem;
+}
+.live .look{
+    background-color: #4cadff;
+    color: #fff !important;
+    font-size: .7rem;
+    padding: .2rem .5rem;
+    border-radius: .2rem;
+}
+.live .look_buy .gutter{
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+    border-top: 1px solid #ebebeb;
+    border-radius: 0;
+}
+.live .look_buy .discrip{
+    margin-bottom: .2rem;
+    font-size: .8rem;
+}
+.live .look_buy .much{
+    margin-top: .1rem;
+    font-size: .9rem;
+}

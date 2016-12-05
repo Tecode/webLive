@@ -1,10 +1,267 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-	<meta charset="UTF-8" />
-	<title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>手机直播商城</title>
+    <link rel="stylesheet" href="js/bower_components/sui_mobile/dist/css/sm.min.css">
+    <link rel="stylesheet" href="js/bower_components/swiper/dist/css/swiper.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-	
+<div class="page-group live">
+    <!-- 单个page ,第一个.page默认被展示-->
+    <div class="page">
+            <div class="video_box">
+                <img src="img/video.jpg" width="100%">
+            </div>
+            <!--下方内容信息-->
+            <div class="swiper-container" id="swiper-container2">
+                <div class="swiper-wrapper navbar">
+                    <a class="swiper-slide text-center swiper-no-swiping active">聊天室</a>
+                    <a class="swiper-slide text-center swiper-no-swiping">主播推荐</a>
+                    <a class="swiper-slide text-center swiper-no-swiping">边看边买</a>
+                    <div class="line"></div>
+                </div>
+            </div>
+            <div class="swiper-container" id="swiper-container3">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide bg_black">
+                        <div class="content-padded">
+                            <header class="living">
+                                <span class="live_status">直播中</span>
+                                <span>观看人数1954</span>
+                            </header>
+                            <ul class="communication">
+                                <li><span class="color_r">ad**sa 游客来了</span></li>
+                                <li><span class="color_g">妮妮*8  正在去购买的路上</span></li>
+                                <li><span class="color_b">ad**sa 买买买</span></li>
+                                <li><span class="color_r">ad**sa 游客来了</span></li>
+                                <li><span class="color_g">妮妮*8  正在去购买的路上</span></li>
+                                <li><span class="color_g">妮妮*8  正在去购买的路上</span></li>
+                                <li><span class="color_b">ad**sa 买买买</span></li>
+                                <li><span class="color_r">ad**sa 游客来了</span></li>
+                            </ul>
+                        </div>
+                        <div class="click_good">
+                            <img src="img/click_good.png" width="100%">
+                            <div class="speek">
+                                <input class="text-center" placeholder="和主播聊点什么" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                                <!-- 添加 class infinite-scroll 和 data-distance  向下无限滚动可不加infinite-scroll-bottom类，这里加上是为了和下面的向上无限滚动区分-->
+                                <div class="content infinite-scroll infinite-scroll-bottom" style="height: 400px" data-distance="100">
+                                    <div class="list-block" style="margin-top: 0">
+                                        <ul class="list-container">
+                                            <li class="push_store">
+                                                <p class="text-center">3分钟前</p>
+                                                <div class="row gutter">
+                                                    <div class="portrait">
+                                                        <img src="img/push_image.jpg" width="100%">
+                                                    </div>
+                                                    <div class="minicon"><img src="img/tipe.png" width="100%"></div>
+                                                    <div class="col-33">
+                                                        <img src="img/push_image.jpg" width="100%">
+                                                    </div>
+                                                    <div class="col-66">
+                                                        <div class="discrip">少女系列毛衣特卖地方都会员回复热狗热少女系列毛衣特卖地方</div>
+                                                        <div class="pull-left">
+                                                            <div class="count">库存：122</div>
+                                                            <div class="much">￥21.00</div>
+                                                        </div>
+                                                        <div class="pull-right">
+                                                            <span class="icon-shopcar"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="push_store">
+                                                <p class="text-center">3分钟前</p>
+                                                <div class="row gutter">
+                                                    <div class="portrait">
+                                                        <img src="img/push_image.jpg" width="100%">
+                                                    </div>
+                                                    <div class="minicon"><img src="img/tipe.png" width="100%"></div>
+                                                    <div class="col-33">
+                                                        <img src="img/push_image.jpg" width="100%">
+                                                    </div>
+                                                    <div class="col-66">
+                                                        <div class="discrip">少女系列毛衣特卖地方都会员回复热狗热少女系列毛衣特卖地方</div>
+                                                        <div class="pull-left">
+                                                            <div class="count">库存：122</div>
+                                                            <div class="much">￥21.00</div>
+                                                        </div>
+                                                        <div class="pull-right">
+                                                            <a class="look">去看看</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- 加载提示符 -->
+                                    <div class="infinite-scroll-preloader">
+                                        <div class="preloader"></div>
+                                    </div>
+                            </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <!-- 添加 class infinite-scroll 和 data-distance  向下无限滚动可不加infinite-scroll-bottom类，这里加上是为了和下面的向上无限滚动区分-->
+                        <div class="content infinite-scroll infinite-scroll-bottom" style="height: 400px" data-distance="100">
+                            <div class="list-block" style="margin-top: 0">
+                                <ul class="list-container">
+                                    <li class="push_store look_buy">
+                                        <div class="row gutter">
+                                            <div class="col-33">
+                                                <img src="img/push_image.jpg" width="100%">
+                                            </div>
+                                            <div class="col-66">
+                                                <div class="discrip">少女系列毛衣特卖地方都会员回复热狗热少女系列毛衣特卖地方</div>
+                                                <div class="pull-left">
+                                                    <div class="count">库存：122</div>
+                                                    <div class="much">￥21.00</div>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <span class="icon-shopcar"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="push_store look_buy">
+                                        <div class="row gutter">
+                                            <div class="col-33">
+                                                <img src="img/push_image.jpg" width="100%">
+                                            </div>
+                                            <div class="col-66">
+                                                <div class="discrip">少女系列毛衣特卖地方都会员回复热狗热少女系列毛衣特卖地方</div>
+                                                <div class="pull-left">
+                                                    <div class="count">库存：122</div>
+                                                    <div class="much">￥21.00</div>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <span class="icon-shopcar"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- 加载提示符 -->
+                            <div class="infinite-scroll-preloader">
+                                <div class="preloader"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--下方内容信息-->
+    </div>
+</div>
 </body>
+    <script src="js/bower_components/zepto/zepto.min.js"></script>
+    <script src="js/bower_components/zepto/zepto.touch.js"></script>
+    <script src="js/bower_components/swiper/dist/js/swiper.jquery.min.js"></script>
+    <script src="js/bower_components/sui_mobile/dist/js/sm.min.js"></script>
+    <script>
+        var fn =function () {
+            //下拉刷新
+            this.pager = function () {
+                // 加载flag
+                var loading = false;
+                // 最多可加载的条目
+                var maxItems = 100;
+
+                // 每次加载添加多少条目
+                var itemsPerLoad = 20;
+
+                function addItems(number, lastIndex) {
+                    // 生成新条目的HTML
+                    var html = '';
+                    for (var i = lastIndex + 1; i <= lastIndex + number; i++) {
+                        html += '<li class="item-content"><div class="item-inner"><div class="item-title">Item ' + i + '</div></div></li>';
+                    }
+                    // 添加新条目
+                    $('.infinite-scroll-bottom .list-container').append(html);
+
+                }
+                //预先加载20条
+                addItems(itemsPerLoad, 0);
+
+                // 上次加载的序号
+
+                var lastIndex = 20;
+
+                // 注册'infinite'事件处理函数
+                $(document).on('infinite', '.infinite-scroll-bottom',function() {
+
+                    // 如果正在加载，则退出
+                    if (loading) return;
+
+                    // 设置flag
+                    loading = true;
+
+                    // 模拟1s的加载过程
+                    setTimeout(function() {
+                        // 重置加载flag
+                        loading = false;
+
+                        if (lastIndex >= maxItems) {
+                            // 加载完毕，则注销无限加载事件，以防不必要的加载
+                            $.detachInfiniteScroll($('.infinite-scroll'));
+                            // 删除加载提示符
+                            $('.infinite-scroll-preloader').remove();
+                            return;
+                        }
+
+                        // 添加新条目
+                        addItems(itemsPerLoad, lastIndex);
+                        // 更新最后加载的序号
+                        lastIndex = $('.list-container li').length;
+                        //容器发生改变,如果是js滚动，需要刷新滚动
+                        $.refreshScroller();
+                    }, 1000);
+                });
+            }
+        };
+            fn.prototype.initPage = function () {
+                $.init();
+                var mySwiper2 = new Swiper('#swiper-container2',{
+                    slidesPerView : 3,
+                    onTap: function(){
+                        mySwiper3.slideTo( mySwiper2.clickedIndex);
+                    }
+                });
+                $('.swiper-no-swiping').on('tap',function () {
+                    mySwiper3.slideTo($(this).index());
+                });
+                var mySwiper3 = new Swiper('#swiper-container3',{
+                    onSlideChangeStart: function(){
+                        updateNavPosition()
+                    }
+                });
+                function updateNavPosition(){
+                    $('#swiper-container2 .active-nav').removeClass('active-nav');
+                    var activeNav = $('#swiper-container2 .swiper-slide').eq(mySwiper3.activeIndex).addClass('active-nav');
+
+                    if (!activeNav.hasClass('swiper-slide-visible')) {
+                        if (activeNav.index()>mySwiper2.activeIndex) {
+                            console.log(2);
+                            var thumbsPerNav = Math.floor(mySwiper2.width/activeNav.width())-1;
+                            mySwiper2.slideTo(activeNav.index()-thumbsPerNav)
+                        }
+                        else {
+                            mySwiper2.slideTo(activeNav.index())
+                        }
+                    }
+                }
+            };
+            var cloudMail = new fn;
+            $(function () {
+                cloudMail.initPage();
+                cloudMail.pager();
+            })
+    </script>
 </html>
