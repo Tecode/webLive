@@ -140,6 +140,7 @@ img{
     height: 1.8rem;
     border: none;
     background: none;
+    color: #fff;
     border-bottom-left-radius: .1rem;
     border-top-left-radius: .1rem;
 }
@@ -154,6 +155,15 @@ img{
     position: absolute;
     bottom: 2.5rem;
     left: 0;
+}
+
+.live footer .click_good .good_icon{
+    position: absolute;
+    top: -1.4rem;
+    right: .7rem;
+}
+.live .click_good .click_good div{
+
 }
 /*推送商品*/
 .live .goods_box{
@@ -338,6 +348,45 @@ img{
     width: 40px;
     height: 40px;
 }
+/*点赞图标*/
+.icon_heart{
+    background: url("../img/good_icon.png")0 0 no-repeat;
+    background-size: 110px;
+    height: 28px;
+    width: 33px;
+}
+.icon_gift{
+    background: url("../img/good_icon.png")0 -30px no-repeat;
+    background-size: 110px;
+    height: 28px;
+    width: 33px;
+}
+.icon_jewel{
+     background: url("../img/good_icon.png")-31px -30px no-repeat;
+     background-size: 110px;
+     height: 28px;
+     width: 33px;
+ }
+.icon_sweet{
+    background: url("../img/good_icon.png")-54px 0 no-repeat;
+    background-size: 90px;
+    height: 28px;
+    width: 33px;
+}
+.icon_ice{
+    background: url("../img/good_icon.png")-33px 0 no-repeat;
+    background-size: 100px;
+    height: 30px;
+    width: 33px;
+
+}
+.icon_gift_g{
+    background: url("../img/good_icon.png")-60px -30px no-repeat;
+    background-size: 100px;
+    height: 30px;
+    width: 33px;
+}
+
 .operate input{
     width: 2rem !important;
     padding: 1px 0 !important;
@@ -579,4 +628,53 @@ img{
     height: 1.5rem;
     background-color: rgba(10,10,10,0.8);
     color: #ff5757;
+}
+/*点赞动画*/
+@-webkit-keyframes bounceInUp {
+    from, 60%, 75%, 100%, to {
+        -webkit-animation-timing-function: ease;
+        animation-timing-function: ease;
+    }
+
+    from {
+        opacity: 1;
+        -webkit-transform: translate3d(0, 0, 0) scale(1,1);
+        transform: translate3d(0, 0, 0) scale(1,1);
+    }
+
+    100% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -12rem, 0) scale(1.8,1.8);
+        transform: translate3d(0, -12rem, 0) scale(1.8,1.8);
+    }
+}
+
+@keyframes bounceInUp {
+    from, 60%, 75%, 100%, to {
+        -webkit-animation-timing-function: ease;
+        animation-timing-function: ease;
+    }
+
+    from {
+        opacity: 1;
+        -webkit-transform: translate3d(0, 0, 0) scale(1,1);
+        transform: translate3d(0, 0, 0) scale(1,1);
+    }
+
+    100% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -12rem, 0) scale(1.8,1.8);
+        transform: translate3d(0, -12rem, 0) scale(1.8,1.8);
+    }
+}
+
+.bounceInUp {
+    -webkit-animation-name: bounceInUp;
+    animation-name: bounceInUp;
+}
+.animated {
+    -webkit-animation-duration: 1.8s;
+    animation-duration: 1.8s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
 }

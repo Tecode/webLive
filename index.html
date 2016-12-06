@@ -13,8 +13,8 @@
 <div class="page-group live">
     <div class="page page-current" id="pageIndex">
             <!--id="id_video_container"-->
-            <div class="video_box" style="width: 100%;height: 100%">
-                <img src="img/video.jpg" width="100%">
+            <div class="video_box" id="id_video_container" style="width: 100%;height: 100%">
+                <!--<img src="img/video.jpg" width="100%">-->
             </div>
             <div class="float_box">
                 <header class="clearfix">
@@ -26,23 +26,25 @@
                 <p class="live_people">观看人数1946</p>
                 <!--聊天记录-->
                 <div class="content-padded list_infomation">
-                    <ul class="communication">
-                        <li><span class="color_r">ad**sa 游客来了</span></li>
-                        <li><span class="color_g">妮妮*8  正在去购买的路上</span></li>
-                        <li><span class="color_b">ad**sa 买买买</span></li>
-                        <li><span class="color_r">ad**sa 游客来了</span></li>
-                        <li><span class="color_g">妮妮*8  正在去购买的路上</span></li>
-                        <li><span class="color_g">妮妮*8  正在去购买的路上</span></li>
+                    <ul class="communication" id="video_sms_list">
+                        <!--<li><span class="color_r">ad**sa 游客来了</span></li>-->
+                        <!--<li><span class="color_g">妮妮*8  正在去购买的路上</span></li>-->
+                        <!--<li><span class="color_b">ad**sa 买买买</span></li>-->
+                        <!--<li><span class="color_r">ad**sa 游客来了</span></li>-->
+                        <!--<li><span class="color_g">妮妮*8  正在去购买的路上</span></li>-->
+                        <!--<li><span class="color_g">妮妮*8  正在去购买的路上</span></li>-->
                     </ul>
                 </div>
                 <!--发送消息点赞打开购物商品-->
                 <footer class="clearfix">
                     <div class="input_text pull-left">
-                       <input placeholder="说点什么吧！"/><span>发送</span>
+                       <input id="speek" placeholder="说点什么吧！"/><span id="send">发送</span>
                     </div>
                     <div class="click_good clearfix pull-right">
                         <i class="icon icon_more pull-left"></i>
-                        <i class="icon icon_good pull-left"></i>
+                        <div class="icon icon_good pull-left">
+                            <!--<div class="animated bounceInUp icon icon_gift_g good_icon"></div>-->
+                        </div>
                     </div>
                 </footer>
                 <!--弹出的购物信息窗-->
@@ -168,18 +170,19 @@
     </div>
 </div>
 </body>
-    <!--<script src="js/imsdk/webim.js"></script>-->
-    <!--<script src="js/imsdk/json2.js"></script>-->
-    <!--<script src="js/webLive.im.js"></script>-->
-    <!--<script src="//qzonestyle.gtimg.cn/open/qcloud/video/live/h5/live_connect.js" charset="utf-8"></script>-->
+    <script src="js/imsdk/webim.js"></script>
+    <script src="js/imsdk/json2.js"></script>
+    <script src="js/webLive.im.js"></script>
+    <script src="//qzonestyle.gtimg.cn/open/qcloud/video/live/h5/live_connect.js" charset="utf-8"></script>
     <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
     <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
     <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
     <script src="js/bower_components/zepto/zepto.touch.js"></script>
     <script src="js/bower_components/swiper/dist/js/swiper.jquery.min.js"></script>
     <script type="text/javascript">
+        var icon =['icon_gift_g','icon_ice','icon_sweet','icon_jewel','icon_gift','icon_heart'];
         var fn =function () {
-            //分页
+            //下拉加载数据
             this.pager = function () {
                 // 加载flag
                 var loading = false;
@@ -237,12 +240,13 @@
                     }, 1000);
                 });
             };
+            //播放直播视频
             this.player =function () {
                 var option = {
                     "live_url" : "http://5219.liveplay.myqcloud.com/live/5219_205.flv?roomid=GWdIRS0eSvg=",
                     "live_url2" : "http://5219.liveplay.myqcloud.com/live/5219_205.flv?roomid=GWdIRS0eSvg=",
-                    "width" : $(document).width(),
-                    "height" : 320
+                    "width" : $('#id_video_container').width(),
+                    "height" : $('#id_video_container').height()
                     //...可选填其他属性
                 };
 
@@ -281,17 +285,47 @@
                         $('.live-video-online').html(online);
                     }
                 };
+
                 //初始化
                 liveim.login(iminfo);
-                $('.input_msg').on('keydown',function(event){
-                    if(event.keyCode == 13){
-                        liveim.send($(this).val())
+
+            };
+            //显示消息
+            this.showListInfo = function () {
+                    var maxDisplayMsgCount = 6;
+                    var opacityStep = 0.2;
+                    var opacity;
+                    var colors =['color_r','color_g','color_b'];
+                    var childrenLiList = $("#video_sms_list").children();
+                    if (childrenLiList.length == maxDisplayMsgCount) {
+                        $("#video_sms_list").children().first().remove();
+                        for (var i = 0; i < maxDisplayMsgCount; i++) {
+                            opacity = opacityStep * (i + 1);
+                            $('#video_sms_list').children().eq(i).css("opacity", opacity);
+                        }
                     }
-                })
+                    //写入消息
+                    $('#video_sms_list').append('<li><span class="'+colors[1]+'">ad**sa 游客来了</span></li>');
+            };
+            this.infoBody = function (data) {
+                return                         {
+                    "MsgType": "TIMCustomElem",
+                    "MsgContent": {
+                        "Data": data,
+                        "Desc": "notification",
+                        "Ext": "url",
+                        "Sound": "dingdong.aiff"
+                    }
+                }
             }
         };
+            //初始化页面
             fn.prototype.initPage = function () {
                 $.init();
+                $('.float_box #send').on('tap',function(){
+                    console.info(cloudMail.infoBody({type:1000,content:$('#speek').val()}));
+                    //liveim.send(cloudMail.infoBody({type:1000,content:$('#speek').val()}))
+                });
                 var mySwiper2 = new Swiper('#swiper-container2',{
                     slidesPerView : 2,
                     onTap: function(){
@@ -304,7 +338,7 @@
                     $(this).addClass('active');
                 });
 //                点击弹出购物窗口
-                $('.click_good .icon_more ').on('tap',function () {
+                $('.click_good .icon_more').on('tap',function () {
                    $('.live .goods_box').css('bottom','0')
                 });
                 //关闭弹出窗
@@ -333,16 +367,30 @@
                     }
                 }
             };
+            //点赞动画
+            fn.prototype.clickGood = function () {
+                $('.click_good .icon_good').on('tap',function () {
+                    cloudMail.showListInfo();
+                    $('.click_good .icon_good').append($('<div class="animated bounceInUp icon good_icon"></div>').addClass(icon[Math.floor(Math.random()*6)]));
+//                    <div class="animated bounceInUp icon icon_heart good_icon"></div>
+                })
+            };
             var cloudMail = new fn;
         // 处理页面加载的方法
             cloudMail.initPage();
             cloudMail.pager();
             cloudMail.player();
+            cloudMail.clickGood();
+                //清除点赞dom
+                setInterval(function () {
+                    $('.click_good .icon_good').children().remove()
+                },20000);
             $(document).on("pageAnimationStart", function(e, pageId, $page) {
                 if(pageId == "pageIndex") {
                     cloudMail.initPage();
                     cloudMail.pager();
-                    cloudMail.player();
+                    cloudMail.clickGood();
+//                    cloudMail.player();
 
                 }
     });
