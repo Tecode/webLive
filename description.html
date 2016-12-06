@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>直播商品详情</title>
+    <link rel="stylesheet" href="js/bower_components/sui_mobile/dist/css/sm.min.css">
+    <link rel="stylesheet" href="js/bower_components/swiper/dist/css/swiper.min.css">
+    <link rel="stylesheet" href="css/discription.css">
+</head>
+<body>
+<div class="page-group discription">
+    <!--//查看详细信息-->
+    <div class="page discription page-current" id="discription1">
+            <div class="content goods">
+                <div class="banner">
+                    <div class="swiper-container" data-autoHeight='true' data-space='10'>
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <img src="img/55e668d5N4252aeea.jpg" width="100%" alt="">
+                            </div>
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+
+                <div class="text">
+                    <dl class="content-padded">
+                        <dd class="color-default" style="font-size: .9rem">贝壳家族beikejiazu童装女童短袖儿童夏装韩版新款上衣彩星星</dd>
+                        <dd class="color-danger">绣花图案设计，百搭经典，六一特惠</dd>
+                        <dt><span class="big color-danger">￥51</span>
+                            <span class="del">库存剩余500</span>
+                        </dt>
+                    </dl>
+                </div>
+                <div class="chose-box">
+                    <div class="row text-center">
+                        <div class="discriptioninfo text-center">
+                            <span>商品详情</span>
+                        </div>
+                    </div>
+                    <div class="box-img">
+                        <img alt="" src="img/55e668d5N4252aeea.jpg" width="100%">
+                        <img alt="" src="img/55e668d5N4252aeea.jpg" width="100%">
+                        <img alt="" src="img/55e668d5N4252aeea.jpg" width="100%">
+                        <img alt="" src="img/55e668d5N4252aeea.jpg" width="100%">
+                    </div>
+                </div>
+            </div>
+            <div class="nav_footer row">
+                <div class="col-20">
+                    <i class="icon icon_shopcarnobg nobg">
+                        <span class="car_count">45</span>
+                    </i>
+                </div>
+                <div class="col-80 choice_btn">
+                    <a href="javascript:;" class="btn-yellow text-center">加入购物车</a>
+                    <a href="#discription2" class="btn-red text-center">立即购买</a>
+                </div>
+            </div>
+        </div>
+    <!--//购买选择属性-->
+    <div class="page discription" id="discription2">
+        <div class="content goods">
+            <div class="banner">
+                <div class="swiper-container" data-autoHeight='true' data-space='10'>
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img src="img/55e668d5N4252aeea.jpg" width="100%" alt="">
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+
+            <div class="text">
+                <dl class="content-padded">
+                    <dd class="color-default" style="font-size: .9rem">贝壳家族beikejiazu童装女童短袖儿童夏装韩版新款上衣彩星星</dd>
+                    <dd class="color-danger">绣花图案设计，百搭经典，六一特惠</dd>
+                    <dt><span class="big color-danger">￥51</span>
+                        <span class="del">库存剩余500</span>
+                    </dt>
+                </dl>
+                    <ul class="type">
+                        <li>
+                            <div class="heard_tips">信息类型</div>
+                            <div class="value">
+                                <span class="valueactive">花露水</span>
+                                <span>离得</span>
+                                <span>阿斯旺路水</span>
+                                <span>离得</span>
+                                <span>阿斯旺路水</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="heard_tips">信息类型</div>
+                            <div class="value">
+                                <span>花露水</span>
+                                <span class="novalue">离得</span>
+                                <span>阿斯旺路水</span>
+                            </div>
+                        </li>
+                    </ul>
+                <button class="submitbuttom" type="button">确定</button>
+                <button class="back" type="button">返回</button>
+                </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
+<script src="js/bower_components/zepto/zepto.touch.js"></script>
+<script src="js/bower_components/swiper/dist/js/swiper.jquery.min.js"></script>
+<script type="text/javascript">
+    var fn =function () {
+        //分页
+        this.pager = function () {
+            // 加载flag
+            var loading = false;
+            // 最多可加载的条目
+            var maxItems = 100;
+
+            // 每次加载添加多少条目
+            var itemsPerLoad = 20;
+
+            function addItems(number, lastIndex) {
+                // 生成新条目的HTML
+                var html = '';
+                for (var i = lastIndex + 1; i <= lastIndex + number; i++) {
+                    html += '<li class="item-content"><div class="item-inner"><div class="item-title">Item ' + i + '</div></div></li>';
+                }
+                // 添加新条目
+                $('.infinite-scroll-bottom .list-container').append(html);
+
+            }
+            //预先加载20条
+            addItems(itemsPerLoad, 0);
+
+            // 上次加载的序号
+
+            var lastIndex = 20;
+
+            // 注册'infinite'事件处理函数
+            $(document).on('infinite', '.infinite-scroll-bottom',function() {
+
+                // 如果正在加载，则退出
+                if (loading) return;
+
+                // 设置flag
+                loading = true;
+
+                // 模拟1s的加载过程
+                setTimeout(function() {
+                    // 重置加载flag
+                    loading = false;
+
+                    if (lastIndex >= maxItems) {
+                        // 加载完毕，则注销无限加载事件，以防不必要的加载
+                        $.detachInfiniteScroll($('.infinite-scroll'));
+                        // 删除加载提示符
+                        $('.infinite-scroll-preloader').remove();
+                        return;
+                    }
+
+                    // 添加新条目
+                    addItems(itemsPerLoad, lastIndex);
+                    // 更新最后加载的序号
+                    lastIndex = $('.list-container li').length;
+                    //容器发生改变,如果是js滚动，需要刷新滚动
+                    $.refreshScroller();
+                }, 1000);
+            });
+        };
+        this.player =function () {
+            var option = {
+                "live_url" : "http://5219.liveplay.myqcloud.com/live/5219_205.flv?roomid=GWdIRS0eSvg=",
+                "live_url2" : "http://5219.liveplay.myqcloud.com/live/5219_205.flv?roomid=GWdIRS0eSvg=",
+                "width" : $(document).width(),
+                "height" : 320
+                //...可选填其他属性
+            };
+
+            var player = new qcVideo.Player("id_video_container", option);
+            //消息
+            var iminfo = {
+                logininfo:{
+                    sdkAppID: '1400018727',//用户标识接入SDK的应用ID，必填
+                    appIDAt3rd: '1400018727',//和sdkAppID一样
+                    accountType: '8664',//账号类型，必填
+                    identifier: '70', //用户帐号，选填600034
+                    identifierNick: '小冉', //用户昵称，选填
+                    userSig: 'eJxljlFPgzAYRd-5FYRXjbbdKsXEBzeXSTKyqIMleyFlfLCOFZrSDYbxv*twiSTe13Nu7v20bNt2VouPO77dVsfSxOaswLEfbQc5t39QKZHG3MQjnf6D0CqhIeaZAd1DTCklCA0dkUJpRCauhjtkdVrE-cBvefzTxMwl7lAReQ*DWTj136bdJkyW8jRnmx0UDdm9g9eduxd*BMLVvA0mryEWNJppnvv5c4MT35OL4qGUN8m9gryFg6zWxdLzgv1B15HcNxHLJuv8aTBphITrIYa8MaGMDegJdC2qshcIwhSTEbrEsb6sbymkXWI_' //鉴权Token，identifier不为空时，userSig必填 eJxljktPg0AURvf8iglrowMMD01cINIWaG2ibaluyMgMePsYEKbYYvzvIjaRxLs9J-c7nwpCSF1Mny5pmhYHIRN5KrmKbpCK1Ys-WJbAEioTo2L-ID*WUPGEZpJXPdRM09QxHjrAuJCQwdmwOmqQAa-ZNulHfh*Qjmum4VwPFch7OPOXXnCfP4-Wwh7H84O2ivx2HaXpZrajD9virQhcKmoiiP2y8OSjC7575Z2c0WQHNnttaBjPo7gNp*3kGKwsPVze5c14k70Tf5*Rj9vBpIQ9PwfZFnZsYgyDGl7VUIhe0LtcTTfwz6nKl-INsopctg__
+                },
+                groupid:'205',
+                showTextMsg:function(text,msg){
+                    if(text == ''){
+                        return;
+                    }
+                    var username = msg.fromAccountNick;
+                    var liobj ='<li class="im-item"><span class="username">'+ username +'：</span><span class="msgcontent">'+ text +'</span></li>';
+
+                    if(msg.fromAccount != msg.fromAccountNick && msg.fromAccountNick.indexOf('@@TLS#') >= 0){
+                        username = '[系统消息]';
+                        liobj ='<li class="im-item im-system-msg"><span class="username">'+ username +'：</span><span class="msgcontent">'+ text +'</span></li>';
+                    }
+                    if(msg.getIsSend()){
+                        //自己发送
+                        liobj ='<li class="im-item im-isSelfSend"><span class="username">'+ username +'：</span><span class="msgcontent">'+ text +'</span></li>';
+                    }
+
+                    $(liobj).appendTo('.live-im-list');
+                    $('.live-content-im')[0].scrollTop = $('.live-content-im')[0].scrollHeight
+                },
+                showOnline:function(online){
+                    $('.live-video-online').html(online);
+                }
+            };
+            //初始化
+            liveim.login(iminfo);
+            $('.input_msg').on('keydown',function(event){
+                if(event.keyCode == 13){
+                    liveim.send($(this).val())
+                }
+            })
+        }
+    };
+    fn.prototype.initPage = function () {
+        $.init();
+        var mySwiper2 = new Swiper('#swiper-container2',{
+            slidesPerView : 2,
+            onTap: function(){
+                mySwiper3.slideTo( mySwiper2.clickedIndex);
+            }
+        });
+        $('.swiper-no-swiping').on('tap',function () {
+            mySwiper3.slideTo($(this).index());
+            $('.swiper-no-swiping').removeClass('active');
+            $(this).addClass('active');
+        });
+//                点击弹出购物窗口
+        $('.click_good .icon_more ').on('tap',function () {
+            $('.live .goods_box').css('bottom','0')
+        });
+        //关闭弹出窗
+        $('.float_box .close').on('tap',function (e) {
+            $('.live .goods_box').css('bottom','-20rem')
+        });
+        var mySwiper3 = new Swiper('#swiper-container3',{
+            speed:500,
+            onSlideChangeStart: function(){
+                updateNavPosition()
+            }
+        });
+        function updateNavPosition(){
+            $('#swiper-container2 .active').removeClass('active');
+            var activeNav = $('#swiper-container2 .swiper-slide').eq(mySwiper3.activeIndex).addClass('active');
+
+            if (!activeNav.hasClass('swiper-slide-visible')) {
+                if (activeNav.index()>mySwiper2.activeIndex) {
+                    console.log(2);
+                    var thumbsPerNav = Math.floor(mySwiper2.width/activeNav.width())-1;
+                    mySwiper2.slideTo(activeNav.index()-thumbsPerNav)
+                }
+                else {
+                    mySwiper2.slideTo(activeNav.index())
+                }
+            }
+        }
+    };
+    var cloudMail = new fn;
+    // 处理页面加载的方法
+    cloudMail.initPage();
+    cloudMail.pager();
+    cloudMail.player();
+    $(document).on("pageAnimationStart", function(e, pageId, $page) {
+        if(pageId == "pageIndex") {
+            cloudMail.initPage();
+            cloudMail.pager();
+            cloudMail.player();
+
+        }
+    });
+
+</script>
+</html>

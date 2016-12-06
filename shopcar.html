@@ -92,14 +92,20 @@
 </div>
     <!--//付款页面-->
     <div class="page payment" id='payment'>
-            <div class="address">
-                <i class="icon icon_location"></i>
-                <i class="icon icon_edit"></i>
-                <div class="box">
-                    <h3>收货人：小明   1306526541</h3>
-                    <p>重庆市两江新区金开大道西段106号互联网产业园11栋腾讯众创空间</p>
-                </div>
-            </div>
+            <!--<div class="address">-->
+                <!--<i class="icon icon_location"></i>-->
+                <!--<i class="icon icon_edit"></i>-->
+                <!--<div class="box">-->
+                    <!--<h3>收货人：小明   1306526541</h3>-->
+                    <!--<p>重庆市两江新区金开大道西段106号互联网产业园11栋腾讯众创空间</p>-->
+                <!--</div>-->
+            <!--</div>-->
+        <div class="noaddress address">
+            <a href="#addaddresss" class="box">
+                <h3>添加收货人信息</h3>
+                <i class="icon icon_dulble"></i>
+            </a>
+        </div>
         <section>
                 <h3 class="tittle">商品信息</h3>
             <ul class="payment_list">
@@ -160,6 +166,47 @@
             <div class="col-33">
                 <a href="javascript:;" class="btn-red text-center">去付款</a>
             </div>
+        </div>
+    </div>
+    <!--//填写地址-->
+    <div class="page addaddress" id="addaddresss">
+        <div class="content">
+            <ul class="list">
+                <li class="row">
+                    <div class="col-33">
+                        <label for="person">收货人</label>
+                    </div>
+                    <div class="col-66">
+                        <input type="text" id="person" placeholder="收货人的姓名" required>
+                    </div>
+                </li>
+                <li class="row">
+                    <div class="col-33">
+                        <label for="phone">手机号码</label>
+                    </div>
+                    <div class="col-66">
+                        <input type="text" id="phone" placeholder="11位手机号码">
+                    </div>
+                </li>
+                <li class="row">
+                    <div class="col-33">
+                        <label for="city-picker">选择地区</label>
+                    </div>
+                    <div class="col-66">
+                        <input type="text" id="city-picker" placeholder="所在地区">
+                    </div>
+                </li>
+                <li class="row">
+                    <div class="col-33">
+                        <label for="addresss">详细地址</label>
+                    </div>
+                    <div class="col-66">
+                        <input type="text" id="addresss" placeholder="街道、楼牌号等">
+                    </div>
+                </li>
+            </ul>
+            <div class="errortips text-center">账号错误！</div>
+            <button type="button">确定</button>
         </div>
     </div>
 </div>

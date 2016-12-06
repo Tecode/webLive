@@ -308,6 +308,13 @@ img{
     background-size: 269px;
     width: 23px;
 }
+
+.icon_dulble{
+    background: url("../img/icon.png")-153px 0 no-repeat;
+    background-size: 270px;
+    height: 27px;
+    width: 26px;
+}
 .icon_location{
     background: url("../img/icon.png")-193px 0 no-repeat;
     background-size: 269px;
@@ -420,6 +427,15 @@ img{
     font-size: .9rem;
     font-weight: normal;
 }
+.payment .noaddress a{
+    display: block;
+    color: #505050;
+}
+.payment .noaddress .icon_dulble{
+    position: absolute;
+    top:.6rem;
+    left: .5rem;
+}
 .payment .address p{
     margin: 0;
     font-size: .75rem;
@@ -469,4 +485,98 @@ img{
 }
 .payment .value .pull-right{
     margin-right: .5rem;
+}
+/*填写收货地址*/
+.bar-nav .button-nav{
+    color: #ffffff;
+}
+.bar-nav .button-nav:active{
+    color: #ffffff;
+}
+.text-rigth{
+    text-align: right;
+}
+.address{
+    background-color: #ffffff;
+}
+.bgimage{
+    height: 3.0rem;
+}
+.address .left{
+    padding-top: .6rem;
+    padding-bottom: 1.1rem;
+}
+.address .right{
+    float: right;
+    background-color: #50b1ff;
+    padding: .2rem .8rem .2rem .8rem;
+    border-radius: .1rem;
+    margin-top: .5rem;
+    color: #ffffff;
+}
+.address i{
+    font-size: .9rem;
+    padding-right: .6rem;
+    color: #50b1ff;;
+}
+.list{
+    background-color: #ffffff;
+    color: #505050;
+}
+.list li{
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    border-bottom: 1px solid #f6f6f6;
+}
+.list input{
+    width: 100%;
+    border: none;
+    appearance:none;
+}
+.list label{
+    margin-left: .4rem;
+}
+.picker-modal-inner{
+    font-size: .8rem;
+}
+.picker-modal{
+    background-color: #ffffff;
+}
+.picker-selected{
+    color: #ef4753 !important;
+}
+.picker-modal .button-link{
+    color: #aaaaaa;
+}
+.picker-modal .bar .title{
+    background-color: #ffffff;
+}
+.picker-center-highlight{
+    opacity: .3;
+}
+.picker-modal .bar:before{
+    opacity: .2;
+}
+.picker-modal .bar:after{
+    opacity: .2;
+}
+.addaddress button{
+    display: block;
+    width: 96%;
+    margin: 0 auto;
+    margin-top: 2rem;
+    border: none;
+    padding: .4rem;
+    border-radius: .2rem;
+    color: #fff;
+    background-color: #ff5757;
+}
+.errortips{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1.5rem;
+    background-color: rgba(10,10,10,0.8);
+    color: #ff5757;
 }
