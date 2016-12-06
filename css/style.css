@@ -1,9 +1,17 @@
 body{
     font-family: "Microsoft JhengHei";
 }
+ul li{
+    list-style: none;
+}
+*{
+    margin: 0;
+    padding: 0;
+}
 /*直播观看页面*/
 img{
     pointer-events: none;
+    display: block;
 }
 .live .swiper-wrapper .swiper-slide{
     font-size: .9rem;
@@ -11,20 +19,56 @@ img{
 .live .video_box img{
     display: block;
 }
-.live .swiper-container .navbar{
-    position: relative;
-    background-color: #fff;
-    padding: .3rem 0;
+.live .float_box{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
 }
-.live .swiper-container .navbar a{
+.live .float_box header{
+    overflow: hidden;
+    margin-top: .5rem;
+    margin-left: .5rem;
+}
+.live .float_box .nav{
+    font-size: .9rem;
+    color: #fff;
+    margin-top: .4rem;
+    padding-left: .5rem;
+}
+.live .float_box .nav span{
+    background-color: #ff5757;
+    padding: 0.1rem .4rem;
+    border-radius: .2rem;
+    margin-left: .5rem;
+}
+.live .float_box .live_img{
+    width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+    overflow: hidden;
+}
+.live .live_people{
+    color: #fff;
+    font-weight: normal;
+    margin: .2rem 0 0 .5rem;
+}
+/*顶部文字显示结束*/
+.live .swiper-container{
+    overflow: visible;
+}
+.live .swiper-container .navbar div{
     padding: .3rem .5rem;
     height: 100%;
+    color: #fff;
+    font-size: .8rem;
     -webkit-transition: all .2s ease-in;
     transition: all .2s ease-in;
 }
 .live .active{
-    color: #ff5a5a !important;
-    border-bottom: 2px solid #ff5a5a;
+    background-color: rgba(88,85,81,.6);
 }
 .live .navbar a{
     color: #707070;
@@ -46,85 +90,131 @@ img{
 .live .communication{
     padding-left: 0;
 }
-.live .tuijian{
-    border-left: 1px solid #f5f5f5;
-    border-right: 1px solid #f5f5f5;
-}
 .live .communication li span{
     color: #fff;
     padding: .2rem .6rem;
-    border-radius: 999px;
+    border-radius: .2rem;
     list-style: none;
+}
+.live .list-block ul{
+    background: none;
 }
 .live .communication li{
     margin-top: .8rem;
 }
 .color_r{
-    background-color: #f66860;
+    background-color: rgba(255,87,87,.8);
     color: #fff;
 }
 .color_g{
-    background-color: #474747;
+    background-color: rgba(71,71,71,.8);
     color: #8c8c8c;
 }
 .color_b{
-    background-color: #1e1e1e;
+    background-color: rgba(30,30,30,.8);
     color: #fff;
 }
-.live .click_good{
-    width: 44px;
-    position: fixed;
-    right: 1rem;
-    bottom: 3rem;
+.live .float_box footer{
+    position: absolute;
+    bottom: .5rem;
+    left: 0;
+    width: 100%;
 }
-.live .speek input{
-    width: 8em;
-    height: 1.5rem;
-    border: none;
-    background-color: #2a2a2a;
+.live footer .input_text{
+    margin: .3rem 0 0 .5rem;
+    width: 62%;
+    background-color: rgba(10,10,10,.5);
     border-radius: 999px;
+}
+.live footer .input_text span{
+    border-left: 1px solid rgba(200,200,200,.4);
+    height: 1.4rem;
+    padding: .2rem .3rem;
+    border-bottom-right-radius: .1rem;
+    border-top-right-radius: .1rem;
     color: #fff;
 }
-.live .speek{
-    position: relative;
-    bottom: 0;
-    right: 6em;
+.live footer .input_text input{
+    text-indent: 1em;
+    width: 75%;
+    height: 1.8rem;
+    border: none;
+    background: none;
+    border-bottom-left-radius: .1rem;
+    border-top-left-radius: .1rem;
+}
+.live footer .click_good .icon_more{
+    margin-right: .5rem;
+}
+.live footer .click_good{
+    margin-right: .5rem;
+    margin-top: .3rem;
+}
+.live .list_infomation{
+    position: absolute;
+    bottom: 2.5rem;
+    left: 0;
 }
 /*推送商品*/
-.live .gutter{
-    margin-top: .2rem;
-    padding-top: .5rem;
-    padding-bottom: .2rem;
-    margin-left: 3rem;
-    margin-right: .5rem;
+.live .goods_box{
+    position: absolute;
+    width: 94%;
+    height: 20rem;
+    bottom: -20rem;
+    left: 50%;
+    margin-left: -47%;
+    border-top-left-radius: .2rem;
+    border-top-right-radius: .2rem;
+    background-color: rgba(9,9,6,.9);
+    overflow: hidden;
+    z-index: 3;
+    -webkit-transition: bottom .4s ease;
+    transition: bottom .4s ease;
+}
+.live .goods_box header{
+    margin: 0;
+}
+.live .goods_box footer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1.8rem;
+    z-index: 6;
+}
+.live .goods_box footer a{
+    width: 50%;
+    display: block;
+    height: 2rem;
+    line-height: 1.8rem;
+}
+.live .goods_box footer .shopping{
+    background-color: #ff6262;
+    color: #fff;
+}
+.live .goods_box footer .close{
     background-color: #fff;
+    color: #ff6262;
+}
+.live .gutter{
+    margin-top: .5rem;
+    padding-bottom: .2rem;
+    margin-left: 0;
+    margin-right: .5rem;
     border-radius: .2rem;
+    color: #fff;
 }
 .live .gutter .col-66{
     padding-right: .5rem;
 }
-.live .list-block ul{
-    background-color: #f0f0f0;
-}
 .live .gutter .pull-right{
-    margin-top: .6rem;
+    margin-top: .8rem;
     margin-right: .5rem;
 }
-.live .minicon{
-    width: 14px;
-    position: absolute;
-    left: 2.5rem;
+.live .gutter .pull-right a{
+    color: #fff;
 }
-.live .portrait{
-    width: 1.8rem;
-    height: 1.8rem;
-    border-radius: 999px;
-    overflow: hidden;
-    position: absolute;
-    top: 1.8rem;
-    left: .5rem;
-}
-.live .push_store .discrip{
+.live .push_store .discrip,.shopcar .discrip,.payment .payment_list .discription{
     font-size: .70rem;
     display: -webkit-box;
     margin-top: .1rem;
@@ -137,20 +227,21 @@ img{
     word-break: break-all;
 }
 .live .push_store p{
-    text-indent: 3rem;
+    color: #fff;
     padding-top: .4rem;
     margin: 0;
     font-size: .7rem;
+    padding-bottom: .5rem;
+    border-bottom: 1px solid rgba(71,71,71,.8);
 }
 .live .count{
     font-size: .75rem;
-    color: #4c4c4c;
 }
 .live .much{
     font-size: .80rem;
-    color: #f02b2b;
+    color: #fff;
     font-weight: 500;
-    margin-top: -0.2rem;
+    margin-top: .8rem;
 }
 .icon-shopcar{
     display: block;
@@ -167,11 +258,15 @@ img{
     border-radius: .2rem;
 }
 .live .look_buy .gutter{
-    margin-top: 0;
+    padding: .4rem 0;
+    margin-top: .5rem;
     margin-left: 0;
     margin-right: 0;
-    border-top: 1px solid #ebebeb;
+    border-bottom: 1px solid rgba(71,71,71,.8);
     border-radius: 0;
+}
+.live .list-block ul:before{
+    background: none;
 }
 .live .look_buy .discrip{
     margin-bottom: .2rem;
@@ -180,4 +275,198 @@ img{
 .live .look_buy .much{
     margin-top: .1rem;
     font-size: .9rem;
+}
+/*购物车*/
+.icon{
+    display: block;
+    width: 26px;
+    height: 24px;
+    overflow: hidden;
+}
+.icon_add{
+    background: url("../img/icon.png")-52px 0 no-repeat;
+    background-size: 260px;
+    background-color: #e6e6e6;
+}
+.icon_reduce{
+    background: url("../img/icon.png")-77px 0 no-repeat;
+    background-size: 260px;
+    background-color: #e6e6e6;
+}
+.icon_choice{
+    background: url("../img/icon.png")0 0 no-repeat;
+    background-size: 260px;
+    height: 28px;
+}
+.icon_nochoice{
+    background: url("../img/icon.png")-26px 0 no-repeat;
+    background-size: 260px;
+    height: 28px;
+}
+.icon_delet{
+    background: url("../img/icon.png")-107px -1px no-repeat;
+    background-size: 269px;
+    width: 23px;
+}
+.icon_location{
+    background: url("../img/icon.png")-193px 0 no-repeat;
+    background-size: 269px;
+    width: 23px;
+    height: 27px;
+}
+.icon_edit{
+    background: url("../img/icon.png")-130px -1px no-repeat;
+    background-size: 269px;
+    width: 23px;
+}
+.icon_more{
+    background: url("../img/good.png") 0 0 no-repeat;
+    background-size: 80px;
+    width: 40px;
+    height: 40px;
+}
+.icon_good{
+    background: url("../img/good.png") -40px 0 no-repeat;
+    background-size: 80px;
+    width: 40px;
+    height: 40px;
+}
+.operate input{
+    width: 2rem !important;
+    padding: 1px 0 !important;
+    height: 24px !important;
+    box-sizing: border-box !important;
+    border-top: 1px solid #e6e6e6 !important;
+    border-bottom: 1px solid #e6e6e6 !important;
+}
+.shopcar .discrip{
+    margin-top: .2rem;
+}
+.shopcar .monney{
+    overflow: hidden;
+    padding: .1rem 0;
+}
+.shopcar .shopcar_list{
+    padding: .5rem;
+    border-bottom: 1px solid #e9e9e9;
+    padding-left: 2rem;
+}
+.shopcar .shopcar_list .col-66{
+    padding-right: .5rem;
+}
+.shopcar .col-66 .pull-right{
+    color: #ff4242;
+    margin-right: .5rem;
+}
+.shopcar .in_left{
+    position: absolute;
+    top:2rem;
+    left: .5rem;
+}
+.text-right{
+    text-align: right;
+}
+/*底部购物车*/
+.nav_footer {
+    position: fixed;
+    bottom: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 2.6rem;
+    background-color: #dadada;
+    margin: 0;
+}
+.nav_footer .choice_btn{
+    padding-top: .8rem;
+}
+.nav_footer .choice_btn div{
+    color: #505050;
+}
+.nav_footer .total_tips{
+    padding-top: .4rem;
+}
+.nav_footer .total_tips p{
+    font-size: .70rem;
+    margin: 0;
+}
+.nav_footer .total_tips p span{
+    color: #ff4242;
+}
+.nav_footer .choice_btn i{
+    margin-right: .1rem;
+}
+.nav_footer .btn-red{
+    display: block;
+    height: 2.6rem;
+    line-height: 2.6rem;
+    background-color:#ff4242;
+    color: #fff;
+    font-size: .75rem;
+}
+/*支付页面*/
+.payment{
+    overflow-y: auto !important;
+}
+.payment .address{
+    background-color: #fff;
+    padding: .6rem 0;
+}
+.payment .address .box{
+    width: 75%;
+    margin: 0 auto;
+}
+.payment .address h3{
+    margin: 0;
+    font-size: .9rem;
+    font-weight: normal;
+}
+.payment .address p{
+    margin: 0;
+    font-size: .75rem;
+}
+.payment .address .icon_edit{
+    position: absolute;
+    right: .4rem;
+    top:.8rem;
+}
+.payment .address .icon_location{
+    position: absolute;
+    left: .4rem;
+    top:.8rem;
+}
+.payment section{
+    background-color: #fff;
+    margin-top: .5rem;
+}
+.payment section h3{
+    font-size: .9rem;
+    font-weight: normal;
+    border-bottom: 1px solid #ededed;
+    padding: .4rem 0;
+    margin-left: .5rem;
+}
+.payment .payment_list li{
+    margin-top: .5rem;
+    padding-bottom: .5rem;
+    border-bottom: 1px solid #ededed;
+    margin-left: .5rem;
+}
+.payment .payment_list .col-33{
+    padding: .4rem .4rem .4rem 0;
+}
+.payment .payment_list .discription{
+    margin-top: .4rem;
+    font-size: .9rem;
+    color: #505050;
+    margin-right: .5rem;
+}
+.payment .payment_list .info{
+    margin-top: .6rem;
+    font-size: .9rem;
+}
+.payment .value {
+    padding-bottom: 3.5rem;
+}
+.payment .value .pull-right{
+    margin-right: .5rem;
 }

@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>手机直播商城</title>
+    <link rel="stylesheet" href="js/bower_components/sui_mobile/dist/css/sm.min.css">
+    <link rel="stylesheet" href="js/bower_components/swiper/dist/css/swiper.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="page-group shopcar">
+    <!--//购物车-->
+    <div class="page page-current" id="routers-step-3">
+        <div class="content infinite-scroll infinite-scroll-bottom" style="height: 100%" data-distance="100">
+            <div class="list-block" style="margin-top: 0">
+                <ul class="list-container">
+                    <li class="shopcar_list">
+                        <i class="icon icon_choice in_left"></i>
+                        <div class="row">
+                            <div class="col-33">
+                                <img src="img/push_image.jpg" width="100%">
+                            </div>
+                            <div class="col-66">
+                                <div class="discrip">
+                                    少女系列毛衣特卖地方都会员回复热狗热少女系列毛衣特卖地方少女系列毛衣特卖地方
+                                </div>
+                                <div class="monney">
+                                    <span>银色</span>
+                                    <span class="pull-right">￥360.00</span>
+                                </div>
+                                <div class="operate clearfix">
+                                    <div class="pull-left clearfix">
+                                        <i class="calculate pull-left icon icon_add"></i>
+                                        <input class="pull-left text-center" type="number" placeholder="" />
+                                        <i class="calculate pull-left icon icon_reduce"></i>
+                                    </div>
+                                    <div class="icon pull-right icon_delet"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="shopcar_list">
+                        <i class="icon icon_nochoice in_left"></i>
+                        <div class="row">
+                            <div class="col-33">
+                                <img src="img/push_image.jpg" width="100%">
+                            </div>
+                            <div class="col-66">
+                                <div class="discrip">
+                                    少女系列毛衣特卖地方都会员回复热狗热少女系列毛衣特卖地方少女系列毛衣特卖地方
+                                </div>
+                                <div class="monney">
+                                    <span>银色</span>
+                                    <span class="pull-right">￥360.00</span>
+                                </div>
+                                <div class="operate clearfix">
+                                    <div class="pull-left clearfix">
+                                        <i class="calculate pull-left icon icon_add"></i>
+                                        <input class="pull-left text-center" type="number" placeholder="" />
+                                        <i class="calculate pull-left icon icon_reduce"></i>
+                                    </div>
+                                    <div class="icon pull-right icon_delet"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- 加载提示符 -->
+            <div class="infinite-scroll-preloader">
+                <div class="preloader"></div>
+            </div>
+    </div>
+        <div class="nav_footer row">
+            <div class="col-33 choice_btn">
+                <a href="javascript:;" class="clearfix">
+                    <i class="icon icon_choice pull-left"></i>
+                    <div class="pull-left">全选</div>
+                </a>
+            </div>
+            <div class="col-33 text-right total_tips">
+                <p class="total">总计:<span>￥1365</span></p>
+                <p class="nofree">不含运费</p>
+            </div>
+            <div class="col-33">
+                <a href="#payment" class="btn-red text-center">去结算(0件)</a>
+            </div>
+        </div>
+
+</div>
+    <!--//付款页面-->
+    <div class="page payment" id='payment'>
+            <div class="address">
+                <i class="icon icon_location"></i>
+                <i class="icon icon_edit"></i>
+                <div class="box">
+                    <h3>收货人：小明   1306526541</h3>
+                    <p>重庆市两江新区金开大道西段106号互联网产业园11栋腾讯众创空间</p>
+                </div>
+            </div>
+        <section>
+                <h3 class="tittle">商品信息</h3>
+            <ul class="payment_list">
+                <li>
+                    <a style="display: block" class="row">
+                        <div class="col-33">
+                           <img src="img/push_image.jpg" width="100%">
+                        </div>
+                        <div class="col-66">
+                            <div class="discription">
+                                betu百图时尚荷叶袖绣花衬衫女气质OL五分袖衬衣浅蓝B3M
+                            </div>
+                            <div class="info clearfix">
+                                <span>蓝色尺码M</span>
+                                <span class="pull-right">￥159 X1</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a style="display: block" class="row">
+                        <div class="col-33">
+                            <img src="img/push_image.jpg" width="100%">
+                        </div>
+                        <div class="col-66">
+                            <div class="discription">
+                                betu百图时尚荷叶袖绣花衬衫女气质OL五分袖衬衣浅蓝B3M
+                            </div>
+                            <div class="info clearfix">
+                                <span>蓝色尺码M</span>
+                                <span class="pull-right">￥159 X1</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </section>
+        <section class="value">
+            <h3 class="tittle">
+                <span>商品信息</span>
+                <span class="pull-right">2件</span>
+            </h3>
+            <h3 class="tittle">
+                <span>运费</span>
+                <span class="pull-right">免运费</span>
+            </h3>
+            <h3 class="tittle">
+                <span>活动优惠</span>
+                <span class="pull-right">-10</span>
+            </h3>
+        </section>
+        <div class="nav_footer row">
+            <div class="col-66 choice_btn">
+                <a href="javascript:;" class="clearfix">
+                    <div class="pull-left" style="color: #ff4242">实付款：￥369.50</div>
+                </a>
+            </div>
+            <div class="col-33">
+                <a href="javascript:;" class="btn-red text-center">去付款</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="js/bower_components/zepto/zepto.min.js"></script>
+<script src="js/bower_components/zepto/zepto.touch.js"></script>
+<script src="js/bower_components/swiper/dist/js/swiper.jquery.min.js"></script>
+<script src="js/bower_components/sui_mobile/dist/js/sm.min.js"></script>
+<script>
+    var fn =function () {
+        //下拉刷新
+        this.pager = function () {
+            // 加载flag
+            var loading = false;
+            // 最多可加载的条目
+            var maxItems = 100;
+
+            // 每次加载添加多少条目
+            var itemsPerLoad = 20;
+
+            function addItems(number, lastIndex) {
+                // 生成新条目的HTML
+                var html = '';
+                for (var i = lastIndex + 1; i <= lastIndex + number; i++) {
+                    html += '<li class="item-content"><div class="item-inner"><div class="item-title">Item ' + i + '</div></div></li>';
+                }
+                // 添加新条目
+                $('.infinite-scroll-bottom .list-container').append(html);
+
+            }
+            //预先加载20条
+            addItems(itemsPerLoad, 0);
+
+            // 上次加载的序号
+
+            var lastIndex = 20;
+
+            // 注册'infinite'事件处理函数
+            $(document).on('infinite', '.infinite-scroll-bottom',function() {
+
+                // 如果正在加载，则退出
+                if (loading) return;
+
+                // 设置flag
+                loading = true;
+
+                // 模拟1s的加载过程
+                setTimeout(function() {
+                    // 重置加载flag
+                    loading = false;
+
+                    if (lastIndex >= maxItems) {
+                        // 加载完毕，则注销无限加载事件，以防不必要的加载
+                        $.detachInfiniteScroll($('.infinite-scroll'));
+                        // 删除加载提示符
+                        $('.infinite-scroll-preloader').remove();
+                        return;
+                    }
+
+                    // 添加新条目
+                    addItems(itemsPerLoad, lastIndex);
+                    // 更新最后加载的序号
+                    lastIndex = $('.list-container li').length;
+                    //容器发生改变,如果是js滚动，需要刷新滚动
+                    $.refreshScroller();
+                }, 1000);
+            });
+        }
+    };
+    fn.prototype.initPage = function () {
+        $.init();
+        var mySwiper2 = new Swiper('#swiper-container2',{
+            slidesPerView : 3,
+            onTap: function(){
+                mySwiper3.slideTo( mySwiper2.clickedIndex);
+            }
+        });
+        $('.swiper-no-swiping').on('tap',function () {
+            mySwiper3.slideTo($(this).index());
+            $('.swiper-no-swiping a').removeClass('active');
+            $(this).children('a').addClass('active');
+        });
+        var mySwiper3 = new Swiper('#swiper-container3',{
+            speed:500,
+            onSlideChangeStart: function(){
+                updateNavPosition()
+            }
+        });
+    };
+</script>
+</html>
