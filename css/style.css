@@ -68,7 +68,7 @@ img{
     transition: all .2s ease-in;
 }
 .live .active{
-    background-color: rgba(88,85,81,.6);
+    background-color: #1f1f1d;
 }
 .live .navbar a{
     color: #707070;
@@ -183,6 +183,7 @@ img{
 }
 .live .goods_box header{
     margin: 0;
+    background-color: rgba(88,85,81,.6);
 }
 .live .goods_box footer{
     position: absolute;
@@ -294,22 +295,22 @@ img{
     overflow: hidden;
 }
 .icon_add{
-    background: url("../img/icon.png")-52px 0 no-repeat;
-    background-size: 260px;
-    background-color: #e6e6e6;
-}
-.icon_reduce{
     background: url("../img/icon.png")-77px 0 no-repeat;
     background-size: 260px;
     background-color: #e6e6e6;
 }
-.icon_choice{
-    background: url("../img/icon.png")0 0 no-repeat;
+.icon_reduce{
+    background: url("../img/icon.png")-52px 0 no-repeat;
     background-size: 260px;
-    height: 28px;
+    background-color: #e6e6e6;
 }
 .icon_nochoice{
     background: url("../img/icon.png")-26px 0 no-repeat;
+    background-size: 260px;
+    height: 28px;
+}
+.icon_choice{
+    background: url("../img/icon.png")0 0 no-repeat;
     background-size: 260px;
     height: 28px;
 }
@@ -677,4 +678,7 @@ img{
     animation-duration: 1.8s;
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
+}
+.list-block ul:after{
+    background: none;
 }

@@ -12,80 +12,77 @@
 <body>
 <div class="page-group shopcar">
     <!--//购物车-->
-    <div class="page page-current" id="routers-step-3">
-        <div class="content infinite-scroll infinite-scroll-bottom" style="height: 100%" data-distance="100">
+    <div class="page page-current" id="shoppingCar">
+        <div class="content infinite-scroll-bottom" style="height: 100%" data-distance="100">
             <div class="list-block" style="margin-top: 0">
                 <ul class="list-container">
-                    <li class="shopcar_list">
-                        <i class="icon icon_choice in_left"></i>
-                        <div class="row">
-                            <div class="col-33">
-                                <img src="img/push_image.jpg" width="100%">
-                            </div>
-                            <div class="col-66">
-                                <div class="discrip">
-                                    少女系列毛衣特卖地方都会员回复热狗热少女系列毛衣特卖地方少女系列毛衣特卖地方
-                                </div>
-                                <div class="monney">
-                                    <span>银色</span>
-                                    <span class="pull-right">￥360.00</span>
-                                </div>
-                                <div class="operate clearfix">
-                                    <div class="pull-left clearfix">
-                                        <i class="calculate pull-left icon icon_add"></i>
-                                        <input class="pull-left text-center" type="number" placeholder="" />
-                                        <i class="calculate pull-left icon icon_reduce"></i>
-                                    </div>
-                                    <div class="icon pull-right icon_delet"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="shopcar_list">
-                        <i class="icon icon_nochoice in_left"></i>
-                        <div class="row">
-                            <div class="col-33">
-                                <img src="img/push_image.jpg" width="100%">
-                            </div>
-                            <div class="col-66">
-                                <div class="discrip">
-                                    少女系列毛衣特卖地方都会员回复热狗热少女系列毛衣特卖地方少女系列毛衣特卖地方
-                                </div>
-                                <div class="monney">
-                                    <span>银色</span>
-                                    <span class="pull-right">￥360.00</span>
-                                </div>
-                                <div class="operate clearfix">
-                                    <div class="pull-left clearfix">
-                                        <i class="calculate pull-left icon icon_add"></i>
-                                        <input class="pull-left text-center" type="number" placeholder="" />
-                                        <i class="calculate pull-left icon icon_reduce"></i>
-                                    </div>
-                                    <div class="icon pull-right icon_delet"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
+                    <!--<li class="shopcar_list">-->
+                        <!--<i class="icon icon_choice in_left"></i>-->
+                        <!--<div class="row">-->
+                            <!--<div class="col-33">-->
+                                <!--<img src="img/push_image.jpg" width="100%">-->
+                            <!--</div>-->
+                            <!--<div class="col-66">-->
+                                <!--<div class="discrip">-->
+                                    <!--少女系列毛衣特卖地方都会员回复热狗热少女系列毛衣特卖地方少女系列毛衣特卖地方-->
+                                <!--</div>-->
+                                <!--<div class="monney">-->
+                                    <!--<span>银色</span>-->
+                                    <!--<span class="pull-right">￥360.00</span>-->
+                                <!--</div>-->
+                                <!--<div class="operate clearfix">-->
+                                    <!--<div class="pull-left clearfix">-->
+                                        <!--<i class="calculate pull-left icon icon_add"></i>-->
+                                        <!--<input class="pull-left text-center" type="number" placeholder="" />-->
+                                        <!--<i class="calculate pull-left icon icon_reduce"></i>-->
+                                    <!--</div>-->
+                                    <!--<div class="icon pull-right icon_delet"></div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                    <!--<li class="shopcar_list">-->
+                        <!--<i class="icon icon_nochoice in_left"></i>-->
+                        <!--<div class="row">-->
+                            <!--<div class="col-33">-->
+                                <!--<img src="img/push_image.jpg" width="100%">-->
+                            <!--</div>-->
+                            <!--<div class="col-66">-->
+                                <!--<div class="discrip">-->
+                                    <!--少女系列毛衣特卖地方都会员回复热狗热少女系列毛衣特卖地方少女系列毛衣特卖地方-->
+                                <!--</div>-->
+                                <!--<div class="monney">-->
+                                    <!--<span>银色</span>-->
+                                    <!--<span class="pull-right">-->
+                                    <!--￥360.00</span>-->
+                                <!--</div>-->
+                                <!--<div class="operate clearfix">-->
+                                    <!--<div class="pull-left clearfix">-->
+                                        <!--<i class="calculate pull-left icon icon_add"></i>-->
+                                        <!--<input class="pull-left text-center" type="number" placeholder="" />-->
+                                        <!--<i class="calculate pull-left icon icon_reduce"></i>-->
+                                    <!--</div>-->
+                                    <!--<div class="icon pull-right icon_delet"></div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</li>-->
                 </ul>
-            </div>
-            <!-- 加载提示符 -->
-            <div class="infinite-scroll-preloader">
-                <div class="preloader"></div>
             </div>
     </div>
         <div class="nav_footer row">
             <div class="col-33 choice_btn">
                 <a href="javascript:;" class="clearfix">
-                    <i class="icon icon_choice pull-left"></i>
+                    <i class="icon icon_nochoice pull-left"></i>
                     <div class="pull-left">全选</div>
                 </a>
             </div>
             <div class="col-33 text-right total_tips">
-                <p class="total">总计:<span>￥1365</span></p>
+                <p class="total">总计:￥<span class="sumTotal">0</span></p>
                 <p class="nofree">不含运费</p>
             </div>
             <div class="col-33">
-                <a href="#payment" class="btn-red text-center">去结算(0件)</a>
+                <a href="#payment" class="btn-red text-center">去结算(<span class="sumCount">0</span>件)</a>
             </div>
         </div>
 
@@ -211,90 +208,10 @@
     </div>
 </div>
 </body>
-<script src="js/bower_components/zepto/zepto.min.js"></script>
+<script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
 <script src="js/bower_components/zepto/zepto.touch.js"></script>
 <script src="js/bower_components/swiper/dist/js/swiper.jquery.min.js"></script>
-<script src="js/bower_components/sui_mobile/dist/js/sm.min.js"></script>
-<script>
-    var fn =function () {
-        //下拉刷新
-        this.pager = function () {
-            // 加载flag
-            var loading = false;
-            // 最多可加载的条目
-            var maxItems = 100;
-
-            // 每次加载添加多少条目
-            var itemsPerLoad = 20;
-
-            function addItems(number, lastIndex) {
-                // 生成新条目的HTML
-                var html = '';
-                for (var i = lastIndex + 1; i <= lastIndex + number; i++) {
-                    html += '<li class="item-content"><div class="item-inner"><div class="item-title">Item ' + i + '</div></div></li>';
-                }
-                // 添加新条目
-                $('.infinite-scroll-bottom .list-container').append(html);
-
-            }
-            //预先加载20条
-            addItems(itemsPerLoad, 0);
-
-            // 上次加载的序号
-
-            var lastIndex = 20;
-
-            // 注册'infinite'事件处理函数
-            $(document).on('infinite', '.infinite-scroll-bottom',function() {
-
-                // 如果正在加载，则退出
-                if (loading) return;
-
-                // 设置flag
-                loading = true;
-
-                // 模拟1s的加载过程
-                setTimeout(function() {
-                    // 重置加载flag
-                    loading = false;
-
-                    if (lastIndex >= maxItems) {
-                        // 加载完毕，则注销无限加载事件，以防不必要的加载
-                        $.detachInfiniteScroll($('.infinite-scroll'));
-                        // 删除加载提示符
-                        $('.infinite-scroll-preloader').remove();
-                        return;
-                    }
-
-                    // 添加新条目
-                    addItems(itemsPerLoad, lastIndex);
-                    // 更新最后加载的序号
-                    lastIndex = $('.list-container li').length;
-                    //容器发生改变,如果是js滚动，需要刷新滚动
-                    $.refreshScroller();
-                }, 1000);
-            });
-        }
-    };
-    fn.prototype.initPage = function () {
-        $.init();
-        var mySwiper2 = new Swiper('#swiper-container2',{
-            slidesPerView : 3,
-            onTap: function(){
-                mySwiper3.slideTo( mySwiper2.clickedIndex);
-            }
-        });
-        $('.swiper-no-swiping').on('tap',function () {
-            mySwiper3.slideTo($(this).index());
-            $('.swiper-no-swiping a').removeClass('active');
-            $(this).children('a').addClass('active');
-        });
-        var mySwiper3 = new Swiper('#swiper-container3',{
-            speed:500,
-            onSlideChangeStart: function(){
-                updateNavPosition()
-            }
-        });
-    };
-</script>
+<script src="js/bower_components/echo/echo.js"></script>
+<script src="js/component.js"></script>
 </html>
