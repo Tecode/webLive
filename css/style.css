@@ -225,7 +225,7 @@ img{
 .live .gutter .pull-right a{
     color: #fff;
 }
-.live .push_store .discrip,.shopcar .discrip,.payment .payment_list .discription{
+.live .push_store .discrip,.shopcar .discrip,.payment .payment_list .discription,.oderlist .discrip{
     font-size: .70rem;
     display: -webkit-box;
     margin-top: .1rem;
@@ -512,7 +512,6 @@ img{
     margin-left: .5rem;
 }
 .payment .payment_list li{
-    margin-top: .5rem;
     padding-bottom: .5rem;
     border-bottom: 1px solid #ededed;
     margin-left: .5rem;
@@ -629,6 +628,71 @@ img{
     height: 1.5rem;
     background-color: rgba(10,10,10,0.8);
     color: #ff5757;
+}
+/*订单详情*/
+.oderlist .list-block ul{
+    background: none;
+}
+.oderlist .list-container li{
+    background: #fff;
+    margin-bottom: .4rem;
+}
+.oderlist .list-container .row{
+    background-color: #fafafa;
+    padding: .4rem .5rem .4rem .5rem;
+}
+.oderlist .tittle{
+    font-size: .9rem;
+    padding: .3rem .5rem .3rem .5rem;
+    font-weight: normal;
+}
+.oderlist .cmuch{
+    padding-top: .3rem;
+}
+.oderlist .much{
+    color: #0088ff;
+}
+.oderlist .type{
+    font-size: .9rem;
+    margin-top: .4rem;
+    color: #7c7c7c;
+}
+.oderlist .price{
+    font-size: .8rem;
+}
+.oderlist .introduce{
+    color: #909090;
+    font-size: .7rem;
+    margin: 0;
+    padding: .2rem .3rem .4rem 0;
+    border-bottom: 1px solid #fafafa;
+}
+.oderlist .choice{
+    padding: .6rem 0;
+    font-size: .85rem;
+    font-weight: normal;
+    padding-right: .5rem;
+}
+.oderlist .pay{
+    background-color: #ff5757;
+    border-radius: .2rem;
+    padding: .2rem .6rem;
+    color: #fff;
+}
+.oderlist .detail{
+    color: #707070;
+    padding: .2rem .6rem;
+    border: 1px solid #c4c4c4;
+    border-radius: .2rem;
+}
+.oderlist .count{
+    color: #7c7c7c;
+}
+.oderlist .nopay{
+    color: #ff5757;
+}
+.oderlist .ordernumber{
+    color: #b2b2b2;
 }
 /*点赞动画*/
 @-webkit-keyframes bounceInUp {

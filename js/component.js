@@ -2,6 +2,17 @@
  * Created by ASSOON on 2016/12/7.
  */
 var icon = ['icon_gift_g', 'icon_ice', 'icon_sweet', 'icon_jewel', 'icon_gift', 'icon_heart'];
+
+var loaded = true;
+var linkUrl = {
+    getAllListUrl:'json/allList.json',//获取边看边买列表
+    getShopCarListUrl:'json/shoppingCarList.json',//获取购物车商品
+    deleteShopCarUrl:'json/shoppingCarList.json',//删除购物车商品
+    toPayUrl:'json/shoppingCarList.json',//去付款
+    getGoodsInfoListUrl:'json/shoppingCarList.json',//获取付款页面列表
+    postadressUrl:'json/shoppingCarList.json',//保存地址
+    payPageListUrl:'json/paypage.json'//付款页面商品展示
+};
 var fn = function () {
     //播放直播视频
     this.player = function () {
@@ -25,34 +36,27 @@ var fn = function () {
                 userSig: 'eJxljlFPgzAYRd-5FYRXjbbdKsXEBzeXSTKyqIMleyFlfLCOFZrSDYbxv*twiSTe13Nu7v20bNt2VouPO77dVsfSxOaswLEfbQc5t39QKZHG3MQjnf6D0CqhIeaZAd1DTCklCA0dkUJpRCauhjtkdVrE-cBvefzTxMwl7lAReQ*DWTj136bdJkyW8jRnmx0UDdm9g9eduxd*BMLVvA0mryEWNJppnvv5c4MT35OL4qGUN8m9gryFg6zWxdLzgv1B15HcNxHLJuv8aTBphITrIYa8MaGMDegJdC2qshcIwhSTEbrEsb6sbymkXWI_' //鉴权Token，identifier不为空时，userSig必填 eJxljktPg0AURvf8iglrowMMD01cINIWaG2ibaluyMgMePsYEKbYYvzvIjaRxLs9J-c7nwpCSF1Mny5pmhYHIRN5KrmKbpCK1Ys-WJbAEioTo2L-ID*WUPGEZpJXPdRM09QxHjrAuJCQwdmwOmqQAa-ZNulHfh*Qjmum4VwPFch7OPOXXnCfP4-Wwh7H84O2ivx2HaXpZrajD9virQhcKmoiiP2y8OSjC7575Z2c0WQHNnttaBjPo7gNp*3kGKwsPVze5c14k70Tf5*Rj9vBpIQ9PwfZFnZsYgyDGl7VUIhe0LtcTTfwz6nKl-INsopctg__
             },
             groupid: '205',
-            showTextMsg: function (text, msg) {
-                if (text == '') {
-                    return;
-                }
-                var username = msg.fromAccountNick;
-                var liobj = '<li class="im-item"><span class="username">' + username + '：</span><span class="msgcontent">' + text + '</span></li>';
-
-                if (msg.fromAccount != msg.fromAccountNick && msg.fromAccountNick.indexOf('@@TLS#') >= 0) {
-                    username = '[系统消息]';
-                    liobj = '<li class="im-item im-system-msg"><span class="username">' + username + '：</span><span class="msgcontent">' + text + '</span></li>';
-                }
-                if (msg.getIsSend()) {
-                    //自己发送
-                    liobj = '<li class="im-item im-isSelfSend"><span class="username">' + username + '：</span><span class="msgcontent">' + text + '</span></li>';
-                }
-
-                $(liobj).appendTo('.live-im-list');
-                $('.live-content-im')[0].scrollTop = $('.live-content-im')[0].scrollHeight
+            //type1000
+            onlineData: function () {
+                //在线人数
+                $('.audienceCount').text(arguments[0].audienceCount);
             },
-            showOnline: function (online) {
-                $('.live-video-online').html(online);
+            //推送活动
+            activeData: function () {
+
+            },
+            //推送商品
+            pushStroe:function () {
+
             }
+
         };
 
         //初始化
         liveim.login(iminfo);
 
     };
+
     //显示消息
     this.showListInfo = function () {
         var maxDisplayMsgCount = 6;
@@ -83,15 +87,13 @@ var fn = function () {
     //购物车
     this.shoppingCar = function () {
         var maxCount = 0;
-        //调用购物车请求
-        cloudMail.getShopCarList(null);
         var clickBox = $(".shopcar .list-container");
         //计算总数
         var toltal = function () {
             var sumCount =0;
             var sumMoney = 0;
             $('.shopcar .list-container .icon_nochoice').each(function (index,child) {
-                if($(child).hasClass('icon_choide')){
+                if($(child).hasClass('icon_choice')){
                     sumMoney += parseFloat($(child).parents('.shopcar_list').find('.price').text())*parseFloat($(child).parents('.shopcar_list').find('input').val());
                     sumCount += parseInt($(child).parents('.shopcar_list').find('input').val());
                 }
@@ -102,23 +104,40 @@ var fn = function () {
         //选择或者取消商品
         clickBox.on('touchend','.shopcar .list-container .icon_nochoice',function () {
                 $(this).toggleClass('icon_choice');
+                toltal();
         });
         //点击删除
         clickBox.on('touchend','.shopcar .list-container .icon_delet',function () {
+            var self = this;
             $.confirm('确定要删除吗?', function () {
-
+                var data = JSON.parse($(self).siblings('.clearfix').find('input').attr('data-value'));
+                cloudMail.deleteShopCarList({cid:data.cid,gid:data.gid},$(self).parents('.shopcar_list'),toltal)
             });
         });
         //减少商品
         clickBox.on('touchend','.shopcar .list-container .icon_reduce',function () {
-            var attrData = JSON.parse($(this).siblings('input').attr('data-value'));
             var value = $(this).siblings('input').val();
             value --;
+            value<1?(function () {
+                $.toast("商品数量不能小于1！");
+            })():'';
             value = value<1?1:value;
             $(this).siblings('input').val(value);
             //计算数量
             toltal();
 
+        });
+        //键盘输入
+        clickBox.on('blur','.shopcar .list-container input',function () {
+            var attrData = JSON.parse($(this).attr('data-value'));
+            maxCount = attrData.gstock;
+            if($(this).val()<1){
+                $(this).val(1);
+                $.toast("商品数量不能小于1！");
+            }else if($(this).val()>maxCount){
+                $(this).val(maxCount);
+                $.toast("不能大于商品的库存量！");
+            }
         });
         //增加商品
         clickBox.on('touchend','.shopcar .list-container .icon_add',function () {
@@ -126,6 +145,9 @@ var fn = function () {
             maxCount = attrData.gstock;
             var value = $(this).siblings('input').val();
             value ++;
+            value>maxCount?(function () {
+                $.toast("不能大于商品的库存量！");
+            })():'';
             value = value>maxCount?maxCount:value;
             $(this).siblings('input').val(value);
             toltal();
@@ -151,6 +173,87 @@ var fn = function () {
                 });
             }
         });
+        //去结算
+        $('.nav_footer .topay').on('touchend',function () {
+            var pd = [];
+            if(clickBox.find('.icon_nochoice').hasClass('icon_choice')){
+            clickBox.find('.icon_choice').each(function (index,child) {
+                var data = JSON.parse($(child).parents('.shopcar_list').find('input').attr('data-value'));
+                pd.push({
+                    cid:data.cid,
+                    gid:data.gid,
+                    count:$(child).parents('.shopcar_list').find('input').val()
+                });
+            });
+            cloudMail.toPay(JSON.stringify(pd));
+            }else {
+                $.toast("请选择商品！")
+            }
+        });
+    };
+    //商品详细信息
+    this.goodsInfo = function () {
+
+    };
+    //填写地址
+    this.addAdress = function () {
+        $('.addaddress').on('touchend','.addaddress button',function () {
+            var pData = {};
+            $.each($('.addressForm').serializeArray(),function (index,child) {
+                switch (child.name){
+                    case 'name':
+                        child.value ==''?(function () {
+                            errortip('收货人填写错误！');
+                        })():(function () {
+                            pData[child.name] = child.value;
+                        })();
+                        break;
+                    case 'phone':
+                        !/^1[34578]\d{9}$/.test(child.value)?(function () {
+                            errortip('手机号码格式错误！');
+                        })():(function () {
+                            pData[child.name] = child.value;
+                        })();
+                        break;
+                    case 'area':
+                        child.value ==''?(function () {
+                            errortip('请选择地区！');
+                        })():(function () {
+                            pData[child.name] = child.value;
+                        })();
+                        break;
+                    case 'address':
+                        child.value ==''?(function () {
+                            errortip('详细地址需要填写！');
+                        })():(function () {
+                            pData[child.name] = child.value;
+                        })();
+                        break;
+                }
+            });
+            var vilidate =[];
+            $.each(pData,function (child) {
+                vilidate.push(child)
+            });
+            if(vilidate.length == $('.addressForm input').length && vilidate.length>0){
+                cloudMail.postadress(pData);
+            }
+        });
+
+        function errortip(value) {
+            $('.errortips').text(value).show();
+            setTimeout(function () {
+                $('.errortips').hide().text();
+            },1800)
+        }
+    };
+    //结算页面
+    this.payPage = function () {
+        //编辑地址
+        $('.payment .icon_edit').on('touchend',function () {
+            //编辑地址页面
+            $.router.load("#addaddress");
+        })
     }
 };
 //初始化页面
@@ -206,7 +309,6 @@ fn.prototype.initPage = function () {
 };
 //下拉加载数据
 fn.prototype.pager = function (listContainer, htmlContent, pageCount) {
-
     //图片延时加载（插件修改过）
     echo.init({
         container: $(listContainer)[0],
@@ -250,7 +352,6 @@ fn.prototype.pager = function (listContainer, htmlContent, pageCount) {
     });
 };
 
-
 //ajax方法
 var ajax = function () {
     this.initAjax = function (url, type, postdata, fn) {
@@ -259,7 +360,6 @@ var ajax = function () {
             url: url,
             data: postdata,
             dataType: 'json',
-            timeout: 300,
             success: function (result) {
                 fn.call(this, result);
             },
@@ -271,7 +371,7 @@ var ajax = function () {
     };
     //获取边看边买列表
     this.getAllList = function (pData) {
-        this.initAjax('json/allList.json', 'get', pData, function (result) {
+        this.initAjax(linkUrl.getAllListUrl, 'get', pData, function (result) {
             if (result.code == 0 && result) {
                 // 生成新条目的HTML
                 var html = '';
@@ -288,7 +388,7 @@ var ajax = function () {
     };
     //获取购物车列表
     this.getShopCarList = function (pData) {
-        this.initAjax('json/shoppingCarList.json', 'get', pData, function (result) {
+        this.initAjax(linkUrl.getShopCarListUrl, 'get', pData, function (result) {
             if (result.code == 0 && result) {
                 // 生成新条目的HTML
                 var html = '';
@@ -297,13 +397,91 @@ var ajax = function () {
                     html += '<li class="shopcar_list"><i class="icon icon_nochoice in_left"></i><div class="row"><div class="col-33">' +
                         '<img src="img/push_image.jpg" width="100%"></div><div class="col-66"><div class="discrip">' + listData[i].gname +
                         '</div><div class="monney"><span>' + listData[i].goodsattrval + '</span><span class="pull-right">￥<span class="price">' + listData[i].gprice + '</span></span></div><div class="operate clearfix">' +
-                        '<div class="pull-left clearfix"><i class="calculate pull-left icon icon_reduce"></i><input class="pull-left text-center" value="0" type="number" data-value='+JSON.stringify(listData[i])+' placeholder="" />' +
+                        '<div class="pull-left clearfix"><i class="calculate pull-left icon icon_reduce"></i><input class="pull-left text-center" value="1" type="number" data-value='+JSON.stringify(listData[i])+' placeholder="" />' +
                         '<i class="calculate pull-left icon icon_add"></i></div><div class="icon pull-right icon_delet"></div></div></div></div></li>';
                 }
                 $('#shoppingCar').find('.list-container').html(html);
             }
         })
     };
+    //删除购物车商品
+    this.deleteShopCarList = function (pData,el,fn) {
+        this.initAjax(linkUrl.deleteShopCarUrl, 'get', pData, function (result) {
+            if (result.code == 0 && result) {
+                $.toast("删除成功");
+                el.remove();
+                fn.call(this,'');
+            }else {
+                $.toast(result.msg);
+            }
+        })
+    };
+    //去付款
+    this.toPay = function (pData) {
+        $('');
+            this.initAjax(linkUrl.toPayUrl, 'get', pData, function (result) {
+                if (result.code == 0 && result) {
+                    //跳转到付款页面
+                    $.router.load("#payment");
+                }else {
+                    $.toast(result.msg);
+                }
+            })
+        };
+    //商品信息
+    this.getGoodsInfoList = function () {
+        this.initAjax(linkUrl.getGoodsInfoListUrl, 'get', pData, function (result) {
+            if (result.code == 0 && result) {
+                //跳转到付款页面
+                 $.router.load("#payment",true);
+            }else {
+                $.toast(result.msg);
+            }
+        })
+    };
+    //s收货地址
+    this.postadress= function (pData) {
+        this.initAjax(linkUrl.postadressUrl, 'get', pData, function (result) {
+            if (result.code == 0 && result) {
+                $.toast('保存成功');
+                $.router.back();//返回上一页
+            }else {
+                $.toast(result.msg);
+            }
+        })
+    };
+    //结算页面
+    this.payPageAjax = function (pData) {
+        this.initAjax(linkUrl.payPageListUrl, 'get', pData, function (result) {
+            if (result.code == 0 && result) {
+                // 生成新条目的HTML
+                var html = '';
+                var listData = result.data.orderlist[0].goods;
+                for (var i = 0; i < listData.length; i++) {
+                    html += '<li><a style="display: block" class="row"><div class="col-33"><img src="'+listData[i].goodsimg+'" width="100%">'+
+                            '</div><div class="col-66"><div class="discription">'+listData[i].goodsname+'</div><div class="info clearfix">'+
+                        '<span>'+listData[i].goodstype+'</span><span class="pull-right">￥'+listData[i].goodsprice+' X'+listData[i].goodscount+'</span></div></div></a></li>';
+                }
+                $('#payment').find('.payment_list').html(html);
+                if(result.data.orderlist[0].receivename==""){
+                    $('.haveaddress').hide();
+                    $('.noaddress').show();
+                }else {
+                    $('.haveaddress').show();
+                    $('.noaddress').hide();
+                    //填充地址
+                    $("input[name*='name']").val(result.data.orderlist[0].receivename);
+                    $("input[name*='phone']").val(result.data.orderlist[0].receivephone);
+                    $("input[name*='area']").val(result.data.orderlist[0].receivearea);
+                    $("input[name*='address']").val(result.data.orderlist[0].receiveaddress);
+                    //显示地址
+                    $('.payment .shouhuo').text(result.data.orderlist[0].receivename);
+                    $('.payment .dianhua').text(result.data.orderlist[0].receivephone);
+                    $('.payment .dizhi').text(result.data.orderlist[0].receivearea.replace(" ",'') + result.data.orderlist[0].receiveaddress);
+                }
+            }
+        })
+    }
 };
 var cloudMail = new fn;
 // 处理页面加载的方法
@@ -318,9 +496,43 @@ setInterval(function () {
 $(document).on("pageInit", "#pageIndex", function (e, id, page) {
     cloudMail.initPage();
     cloudMail.clickGood();
+    loaded = true;
 });
 //购物车
-$(document).on("pageInit", "#shoppingCar", function (e, id, page) {
-    cloudMail.shoppingCar()
+$(document).on("pageInit", '#shoppingCar', function(e, pageId, $page) {
+    cloudMail.getShopCarList(null);
+    //获取订单ajax方法
+    cloudMail.payPageAjax();
+    $('.sumTotal').text('0.00');
+    $('.sumCount').text(0);
+    $('.nav_footer .icon_nochoice').removeClass('icon_choice');
+    //避免重复渲染
+    if (loaded) {
+        cloudMail.shoppingCar();
+        //单页面绑定里面的事件
+        cloudMail.addAdress();
+        //编辑地址
+        cloudMail.payPage();
+        //城市选择
+        $("#city-picker").cityPicker({
+            toolbarTemplate: '<header class="bar bar-nav">\
+            <button class="button button-link pull-right close-picker">确定</button>\
+            <h1 class="title">选择收货地址</h1>\
+            </header>'
+        });
+        loaded = false;
+    }
+});
+$(document).on("pageInit", "#payment", function (e, id, page) {
+    //重新获取订单ajax方法
+    cloudMail.payPageAjax();
+    //清空地址
+    $("input[name*='name']").val('');
+    $("input[name*='phone']").val('');
+    $("input[name*='area']").val('');
+    $("input[name*='address']").val('');
+});
+$(document).on("pageInit", "#addaddress", function (e, id, page) {
+
 });
 $.init();

@@ -69,8 +69,16 @@
         if(data){
             switch(data.type){
                 case '1000':
-                    var online = data.content.online;
-                    options.showOnline(online);
+                    options.onlineData(data.content);
+                    break;
+                case '1001':
+
+                    break;
+                case '1004':
+                    options.activeData(data.content);
+                    break;
+                case '1005':
+                    options.pushStroe(data.content);
                     break;
             }
         }
@@ -130,7 +138,6 @@
     };
     //监听新的群（普通和提示）消息函数
     var onBigGroupMsgNotify = function(msgList) {
-        console.log(msgList);
         for (var i = msgList.length - 1; i >= 0; i--) {//遍历消息，按照时间从后往前
             var msg = msgList[i];
             console.log('receive a new group msg: ' + msg.getFromAccountNick());
