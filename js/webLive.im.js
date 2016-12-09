@@ -72,13 +72,13 @@
                     options.onlineData(data.content);
                     break;
                 case '1001':
-
+                    options.people(data.content);
                     break;
                 case '1004':
-                    options.activeData(data.content);
+                    options.pushStroe(data.content);
                     break;
                 case '1005':
-                    options.pushStroe(data.content);
+                    options.activeData(data.content);
                     break;
             }
         }
@@ -210,7 +210,7 @@
         var msgLen = webim.Tool.getStrBytes(msgtosend);
 
         if (msgtosend.length < 1) {
-            alert("发送的消息不能为空!");
+            //alert("发送的消息不能为空!");
             return;
         }
 
@@ -223,7 +223,7 @@
             errInfo = "消息长度超出限制(最多" + Math.round(maxLen / 3) + "汉字)";
         }
         if (msgLen > maxLen) {
-            alert(errInfo);
+            $.toast(errInfo);
             return;
         }
 

@@ -31,6 +31,7 @@ img{
     overflow: hidden;
     margin-top: .5rem;
     margin-left: .5rem;
+    margin-bottom: .5rem;
 }
 .live .float_box .nav{
     font-size: .9rem;
@@ -53,7 +54,8 @@ img{
 .live .live_people{
     color: #fff;
     font-weight: normal;
-    margin: .2rem 0 0 .5rem;
+    margin: .4rem 0 0 .5rem;
+    padding-top: .2rem;
 }
 /*顶部文字显示结束*/
 .live .swiper-container{
@@ -114,6 +116,17 @@ img{
     background-color: rgba(30,30,30,.8);
     color: #fff;
 }
+.live .user{
+    margin-left: .5rem;
+}
+.live .user .img_icon{
+    width: 1.6rem;
+    height: 1.6rem;
+    float: left;
+    border-radius: 999px;
+    overflow: hidden;
+    margin: 0 .1rem;
+}
 .live .float_box footer{
     position: absolute;
     bottom: .5rem;
@@ -133,6 +146,16 @@ img{
     border-bottom-right-radius: .1rem;
     border-top-right-radius: .1rem;
     color: #fff;
+}
+.live #video_sms_list li{
+    overflow: hidden;
+}
+.live #video_sms_list .user_image{
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 999px;
+    overflow: hidden;
+    margin-right: .5rem;
 }
 .live footer .input_text input{
     text-indent: 1em;
@@ -155,6 +178,49 @@ img{
     position: absolute;
     bottom: 2.5rem;
     left: 0;
+    webkit-transition: all .4s linear;
+    transition: all .4s linear;
+}
+
+.live .list_infomation .push_info{
+    overflow: visible;
+    padding-top: .2rem;
+    background-color: #fff;
+    position: absolute;
+    width: 10rem;
+    height: 4rem;
+    top:-4rem;
+    left: .3rem;
+}
+.live .list_infomation .push_info .opcityclose{
+    width: 20px;
+    height: 20px;
+    z-index: 1001;
+    position: absolute;
+    background: url("../img/opcity_close.png");
+    background-size: 20px;
+    top:-.5rem;
+    right: -.5rem;
+}
+.live .list_infomation .push_info .col-60 h4{
+    line-height: 1.0rem;
+    font-weight: normal;
+}
+.live .list_infomation .push_info .col-40{
+    padding: .2rem;
+
+}
+.live .list_infomation .dsp{
+    color: #505050;
+    padding-right: .5rem;
+    display: -webkit-box;
+    height: 2.4em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: .6rem;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
 }
 
 .live footer .click_good .good_icon{
@@ -269,6 +335,7 @@ img{
     border-radius: .2rem;
 }
 .live .look_buy .gutter{
+    display: block;
     padding: .4rem 0;
     margin-top: .5rem;
     margin-left: 0;
@@ -703,14 +770,14 @@ img{
 
     from {
         opacity: 1;
-        -webkit-transform: translate3d(0, 0, 0) scale(1,1);
-        transform: translate3d(0, 0, 0) scale(1,1);
+        -webkit-transform: translate3d(0, 0, 0) scale(.4,.4);
+        transform: translate3d(0, 0, 0) scale(.4,.4);
     }
 
     100% {
         opacity: 0;
-        -webkit-transform: translate3d(0, -12rem, 0) scale(1.8,1.8);
-        transform: translate3d(0, -12rem, 0) scale(1.8,1.8);
+        -webkit-transform: translate3d(0, -12rem, 0) scale(1.0,1.0);
+        transform: translate3d(0, -12rem, 0) scale(1.0,1.0);
     }
 }
 
@@ -722,14 +789,14 @@ img{
 
     from {
         opacity: 1;
-        -webkit-transform: translate3d(0, 0, 0) scale(1,1);
-        transform: translate3d(0, 0, 0) scale(1,1);
+        -webkit-transform: translate3d(0, 0, 0) scale(.4,.4);
+        transform: translate3d(0, 0, 0) scale(.4,.4);
     }
 
     100% {
         opacity: 0;
-        -webkit-transform: translate3d(0, -12rem, 0) scale(1.8,1.8);
-        transform: translate3d(0, -12rem, 0) scale(1.8,1.8);
+        -webkit-transform: translate3d(0, -12rem, 0) scale(1.0,1.0);
+        transform: translate3d(0, -12rem, 0) scale(1.0,1.0);
     }
 }
 

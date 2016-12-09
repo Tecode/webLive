@@ -4,6 +4,7 @@
 var icon = ['icon_gift_g', 'icon_ice', 'icon_sweet', 'icon_jewel', 'icon_gift', 'icon_heart'];
 
 var loaded = true;
+var pageIndex = 1;
 var linkUrl = {
     getAllListUrl:'json/allList.json',//获取边看边买列表
     getShopCarListUrl:'json/shoppingCarList.json',//获取购物车商品
@@ -11,7 +12,8 @@ var linkUrl = {
     toPayUrl:'json/shoppingCarList.json',//去付款
     getGoodsInfoListUrl:'json/shoppingCarList.json',//获取付款页面列表
     postadressUrl:'json/shoppingCarList.json',//保存地址
-    payPageListUrl:'json/paypage.json'//付款页面商品展示
+    payPageListUrl:'json/paypage.json',//付款页面商品展示
+    discriptionUrl:'json/discription.json'
 };
 var fn = function () {
     //播放直播视频
@@ -43,11 +45,19 @@ var fn = function () {
             },
             //推送活动
             activeData: function () {
-
+                $('.live .push_info').show();
+                $('.userimg').attr('src',arguments[0].activityImg);
+                $('.dsp').text(arguments[0].activityName)
+            },
+            people:function () {
+            //进来的人
+                cloudMail.showListInfo(2,'欢迎'+arguments[0].user,arguments.uimg)
             },
             //推送商品
             pushStroe:function () {
-
+                $('.live .push_info').show();
+                $('.userimg').attr('src',arguments[0].activityImg);
+                $('.dsp').text(arguments[0].activityName)
             }
 
         };
@@ -56,9 +66,8 @@ var fn = function () {
         liveim.login(iminfo);
 
     };
-
     //显示消息
-    this.showListInfo = function () {
+    this.showListInfo = function (type,text,userimg) {
         var maxDisplayMsgCount = 6;
         var opacityStep = 0.2;
         var opacity;
@@ -72,12 +81,12 @@ var fn = function () {
             }
         }
         //写入消息
-        $('#video_sms_list').append('<li><span class="' + colors[1] + '">ad**sa 游客来了</span></li>');
+        $('#video_sms_list').append('<li><div class="user_image pull-left"><img src="'+userimg+'" width="100%">'+
+            '</div><span class="' + colors[type] + ' pull-left">'+text+'</span></li>');
     };
     //点赞动画
     this.clickGood = function () {
         $('.click_good .icon_good').on('touchend', function () {
-            cloudMail.showListInfo();
             $('.click_good .icon_good').append($('<div class="animated bounceInUp icon good_icon"></div>').addClass(icon[Math.floor(Math.random() * 6)]));
 //                    <div class="animated bounceInUp icon icon_heart good_icon"></div>
         })
@@ -254,13 +263,11 @@ var fn = function () {
             //编辑地址页面
             $.router.load("#addaddress");
         })
-    }
+    };
 };
 //初始化页面
 fn.prototype.initPage = function () {
     $('.float_box #send').on('touchend', function () {
-        $.init();
-        console.info(cloudMail.infoBody({type: 1000, content: $('#speek').val()}));
         //liveim.send(cloudMail.infoBody({type:1000,content:$('#speek').val()}))
     });
     var mySwiper2 = new Swiper('#swiper-container2', {
@@ -277,8 +284,6 @@ fn.prototype.initPage = function () {
     //  点击弹出购物窗口
     $('.click_good .icon_more').on('touchend', function () {
         $('.live .goods_box').css('bottom', '0');
-        //点击时调用加载全部商品方法
-        cloudMail.getAllList();
     });
     //关闭弹出窗
     $('.float_box .close').on('touchend', function (e) {
@@ -290,6 +295,18 @@ fn.prototype.initPage = function () {
             updateNavPosition()
         }
     });
+    //点击关闭推送的商品
+    $('.push_info').on('touchend','.push_info .opcityclose',function () {
+        $('.push_info').hide();
+    });
+    //点击发送消息
+    $('#send').on('touchend',function () {
+        if($(this).siblings('#speek').val()==''){
+            $.toast("发送的消息不能为空哦");
+        }else{
+            liveim.send($(this).siblings('#speek').val());
+        }
+    });
 
     function updateNavPosition() {
         $('#swiper-container2 .active').removeClass('active');
@@ -297,7 +314,11 @@ fn.prototype.initPage = function () {
 
         if (!activeNav.hasClass('swiper-slide-visible')) {
             if (activeNav.index() > mySwiper2.activeIndex) {
-                console.log(2);
+                //清空已加载
+                $("#allList").find('.look_buy').remove();
+                pageIndex = 1;
+                //点击时调用加载全部商品方法
+                cloudMail.getAllList({pageIndex:1});
                 var thumbsPerNav = Math.floor(mySwiper2.width / activeNav.width()) - 1;
                 mySwiper2.slideTo(activeNav.index() - thumbsPerNav)
             }
@@ -308,12 +329,12 @@ fn.prototype.initPage = function () {
     }
 };
 //下拉加载数据
-fn.prototype.pager = function (listContainer, htmlContent, pageCount) {
+fn.prototype.pager = function (listContainer, htmlContent, pageCount,fn,eq) {
     //图片延时加载（插件修改过）
     echo.init({
         container: $(listContainer)[0],
-        offsetVertical: 150,
-        throttle: 260,
+        offset: 10,
+        throttle: 150,
         unload: false,
         callback: function (element, op) {
             console.log(element, 'has been', op + 'ed')
@@ -326,32 +347,35 @@ fn.prototype.pager = function (listContainer, htmlContent, pageCount) {
         // 添加新条目
         $(listContainer).find('.list-container').append(htmlContent);
     }
-
     //首次加载
     addItems();
     // 注册'infinite'事件处理函数
     $(document).on('infinite', listContainer, function () {
-        alert(4100);
         // 如果正在加载，则退出
         if (loading) return;
         // 设置flag
         loading = true;
-        if (pageCount >= $(listContainer).find('.list-container').length) {
-            // 重置加载flag
-            loading = false;
-            // 加载完毕，则注销无限加载事件，以防不必要的加载
-            $.detachInfiniteScroll($('.infinite-scroll'));
+
+    setTimeout(function () {
+        // 重置加载flag
+        loading = false;
+        if (pageIndex >= pageCount) {
             // 删除加载提示符
             $('.infinite-scroll-preloader').remove();
+            // 加载完毕，则注销无限加载事件，以防不必要的加载
+            $.detachInfiniteScroll($('.infinite-scroll').eq(eq));
             return;
+        }else {
+            // 添加新条目
+            pageIndex++;
+            fn.call('this',pageIndex);
         }
-        // 添加新条目
-        alert('滚动加载');
         //容器发生改变,如果是js滚动，需要刷新滚动
         $.refreshScroller();
+    },100)
+
     });
 };
-
 //ajax方法
 var ajax = function () {
     this.initAjax = function (url, type, postdata, fn) {
@@ -377,12 +401,14 @@ var ajax = function () {
                 var html = '';
                 var listData = result.data;
                 for (var i = 0; i < listData.length; i++) {
-                    html += '<li class="push_store look_buy"><div class="row gutter"><div class="col-33">' +
-                        '<img src="' + listData[i].goodsImg + '" width="100%"></div><div class="col-66"><div class="discrip">' + listData[i].goodsName +
+                    html += '<li class="push_store look_buy"><a href="description.html" class="row gutter"><div class="col-33">' +
+                        '<img src="img/loading.gif" data-echo="' + listData[i].goodsImg + '" width="100%"></div><div class="col-66"><div class="discrip">' + listData[i].goodsName +
                         '</div><div class="pull-left"><div class="count">' + listData[i].goodsStock + '</div>' +
-                        '<div class="much">￥' + listData[i].goodsPrice + '</div></div><div class="pull-right"><span class="icon-shopcar"></span></div></div></div></li>';
+                        '<div class="much">￥' + listData[i].goodsPrice + '</div></div><div class="pull-right"><span class="icon-shopcar"></span></div></div></a></li>';
                 }
-                cloudMail.pager('.infinite-scroll-bottom', html);
+                cloudMail.pager('#allList', html ,result.count,function () {
+                    cloudMail.getAllList({pageIndex:arguments[0]});
+                },1);
             }
         })
     };
@@ -395,7 +421,7 @@ var ajax = function () {
                 var listData = result.cart_list;
                 for (var i = 0; i < listData.length; i++) {
                     html += '<li class="shopcar_list"><i class="icon icon_nochoice in_left"></i><div class="row"><div class="col-33">' +
-                        '<img src="img/push_image.jpg" width="100%"></div><div class="col-66"><div class="discrip">' + listData[i].gname +
+                        '<img src="img/loading.gif" width="100%"></div><div class="col-66"><div class="discrip">' + listData[i].gname +
                         '</div><div class="monney"><span>' + listData[i].goodsattrval + '</span><span class="pull-right">￥<span class="price">' + listData[i].gprice + '</span></span></div><div class="operate clearfix">' +
                         '<div class="pull-left clearfix"><i class="calculate pull-left icon icon_reduce"></i><input class="pull-left text-center" value="1" type="number" data-value='+JSON.stringify(listData[i])+' placeholder="" />' +
                         '<i class="calculate pull-left icon icon_add"></i></div><div class="icon pull-right icon_delet"></div></div></div></div></li>';
@@ -418,7 +444,6 @@ var ajax = function () {
     };
     //去付款
     this.toPay = function (pData) {
-        $('');
             this.initAjax(linkUrl.toPayUrl, 'get', pData, function (result) {
                 if (result.code == 0 && result) {
                     //跳转到付款页面
@@ -481,12 +506,54 @@ var ajax = function () {
                 }
             }
         })
+    };
+    //把商品添加到购物车
+    this.addToCar = function () {
+        this.initAjax(linkUrl.toPayUrl, 'get', pData, function (result) {
+            if (result.code == 0 && result) {
+                //跳转到付款页面
+                $.router.load("#payment");
+            }else {
+                $.toast(result.msg);
+            }
+        })
+    };
+    //商品详情
+    this.discription = function (pData) {
+        this.initAjax(linkUrl.discriptionUrl, 'get', pData, function (result) {
+            if (result.code == 0 && result) {
+                $('.allpage').text(result.data.goodsImgList.length);
+                var banner = '';
+                $.each(result.data.goodsImgList,function (index,child) {
+                    banner +='<div class="swiper-slide"><img src="'+child+'" width="100%" alt=""></div>';
+                });
+                $('.swiper-wrapper').html(banner);
+                //文字描述
+                $('.discription_text').html(
+                    '<dl class="content-padded"><dd class="color-default" style="font-size: .9rem">'+result.data.goodsName+'</dd>'+
+                    '<dd class="color-danger">喜欢就买吧，机会不容错过哦！</dd><dt><span class="big color-danger">￥'+result.data.goodsPrice+'</span><span class="del">库存剩余'+result.data.goodsStock+'</span></dt></dl>'
+                );
+                //图片描述
+                var images = '';
+                $.each(result.goods_list,function (index,child) {
+                    images += '<img alt="" src="'+child.goodsDecImg+'" width="100%">'
+                });
+                $('.box-img').html(images);
+                //轮播
+                    var navbanner = new Swiper('#banner', {
+                        speed: 200,
+                        onSlideChangeEnd: function(swiper){
+                            $('.activepage').text(swiper.activeIndex+1);
+                        }
+                    });
+
+            }else {
+                $.toast(result.msg);
+            }
+        })
     }
 };
 var cloudMail = new fn;
-// 处理页面加载的方法
-cloudMail.initPage();
-cloudMail.clickGood();
 //清除点赞dom
 setInterval(function () {
     $('.click_good .icon_good').children().remove()
@@ -532,7 +599,7 @@ $(document).on("pageInit", "#payment", function (e, id, page) {
     $("input[name*='area']").val('');
     $("input[name*='address']").val('');
 });
-$(document).on("pageInit", "#addaddress", function (e, id, page) {
-
+$(document).on("pageInit", "#discription1", function (e, id, page) {
+    cloudMail.discription();
 });
 $.init();

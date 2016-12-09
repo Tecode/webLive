@@ -38,34 +38,34 @@ img{
     line-height: 4.6em;
 }
 /*商品详情页*/
-.goods .text{
+.discription .goods .text{
     padding-top: .2rem;
     background-color: #fff;
     padding-bottom: .1rem;
 }
-.goods .text dd{
+.discription .goods .text dd{
     font-size: .7rem;
 }
-.goods .big{
+.discription .goods .big{
     font-size: 1.6rem;
     font-weight: inherit;
 }
-.goods .del{
+.discription .goods .del{
     padding-left: .6rem;
     color: #999;
 }
-.canchange nav{
+.discription .canchange nav{
     font-size: .9rem;
 }
-.canchange{
+.discription .canchange{
     background-color: #fff;
     padding-top: .2rem;
     padding-bottom: .8rem;
 }
-.changesize,.changecolor{
+.discription .changesize,.changecolor{
     margin-top: .4rem;
 }
-.changesize li{
+.discription .changesize li{
     margin-left: .5rem;
     float: left;
     padding: .1rem .4rem .1rem .4rem;
@@ -73,7 +73,7 @@ img{
     margin-top: .5rem;
     font-size: .7rem;
 }
-.changecolor li{
+.discription .changecolor li{
     margin-left: .5rem;
     float: left;
     padding: .1rem .4rem .1rem .4rem;
@@ -81,34 +81,34 @@ img{
     margin-top: .5rem;
     font-size: .7rem;
 }
-.null{
+.discription .null{
     border: dotted 1px #e5e5e5!important;
     color: #bcbcbc;
 }
-.selected{
+.discription .selected{
     border: solid 1px #e86059!important;
 }
-.goods .evaluate{
+.discription .goods .evaluate{
     background-color: #fff;
     padding-top: .6rem;
     padding-bottom: .6rem;
 }
-.more{
+.discription .more{
     margin-top: .6rem;
     padding-bottom: .8rem;
 }
-.chose-box{
+.discription .chose-box{
     background-color: #fff;
     padding-top: .5rem;
     margin-bottom: 4rem;
 }
-.chose-box .col-50{
+.discription .chose-box .col-50{
     padding-bottom: .5rem;
 }
-.discriptioninfo{
+.discription .discriptioninfo{
     height: 3rem;
 }
-.discriptioninfo span{
+.discription .discriptioninfo span{
     color: #909090;
     line-height: 2.5rem;
     padding: .4rem 3.6rem;
@@ -130,7 +130,7 @@ img{
     background-color: rgba(0,0,0,0);
 }
 /*底部购物车*/
-.nav_footer {
+.discription .nav_footer {
     position: fixed;
     bottom: 0;
     overflow: hidden;
@@ -139,27 +139,27 @@ img{
     background-color: #494949;
     margin: 0;
 }
-.nav_footer .choice_btn div{
+.discription .nav_footer .choice_btn div{
     color: #505050;
 }
-.nav_footer .total_tips{
+.discription .nav_footer .total_tips{
     padding-top: .4rem;
 }
-.nav_footer .total_tips p{
+.discription .nav_footer .total_tips p{
     font-size: .70rem;
     margin: 0;
 }
-.nav_footer .total_tips p span{
+.discription .nav_footer .total_tips p span{
     color: #ff4242;
 }
-.nav_footer .choice_btn i{
+.discription .nav_footer .choice_btn i{
     margin-right: .1rem;
 }
-.nav_footer .choice_btn a{
+.discription .nav_footer .choice_btn a{
     width: 50%;
     float: left;
 }
-.nav_footer .btn-red{
+.discription .nav_footer .btn-red{
     display: block;
     height: 2.6rem;
     line-height: 2.6rem;
@@ -168,7 +168,7 @@ img{
     font-size: .9rem;
 }
 
-.nav_footer .btn-yellow{
+.discription .nav_footer .btn-yellow{
     display: block;
     height: 2.6rem;
     line-height: 2.6rem;
@@ -176,17 +176,17 @@ img{
     color: #fff;
     font-size: .9rem;
 }
-.icon_shopcarnobg{
+.discription .icon_shopcarnobg{
     background: url("../img/shopcar_nobg.png")0 0 no-repeat;
     background-size: 40px;
     width: 40px;
     height: 40px;
 }
-.nav_footer .nobg{
+.discription .nav_footer .nobg{
     margin-top: .5rem;
     position: relative;
 }
-.nav_footer .car_count{
+.discription .nav_footer .car_count{
     position: absolute;
     top:-.4rem;
     right: -.5rem;
@@ -220,7 +220,7 @@ img{
     background-color: #c6c6c6;
 }
 /*商品属性*/
-.type{
+.discription .type{
     padding: 0 .5rem 2rem .5rem;
 }
 .type .heard_tips{
@@ -235,10 +235,31 @@ img{
     border-radius: .3rem;
     color: #505050;
 }
-.valueactive{
+.discription .nav_footer .choice_btn{
+    padding-top: 0;
+}
+.discription .icon{
+    overflow: visible;
+}
+.discription .valueactive{
     background-color: #ff6565 !important;
     color: #fff !important;
 }
-.novalue{
+.discription .novalue{
     color: #d3d3d3 !important;
+}
+.discription .swiper-container{
+    position: relative;
+}
+.discription .swiper-container .img_box{
+    line-height: 2.2rem;
+    color: #fff;
+    position: absolute;
+    background-color: rgba(10,10,10,.2);
+    bottom: 2rem;
+    right: .5rem;
+    width: 2.4rem;
+    height: 2.4rem;
+    z-index: 1000;
+    border-radius: 999px;
 }

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="js/bower_components/sui_mobile/dist/css/sm.min.css">
     <link rel="stylesheet" href="js/bower_components/swiper/dist/css/swiper.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/discription.css">
 </head>
 <body>
 <div class="page-group live">
@@ -23,11 +24,40 @@
                     </div>
                     <div class="pull-left nav">云邮天下直播房间<span>直播中</span></div>
                 </header>
+
+                <div class="user">
+                    <div class="img_icon">
+                        <img src="img/push_image.jpg" width="100%">
+                    </div>
+                    <div class="img_icon">
+                        <img src="img/push_image.jpg" width="100%">
+                    </div>
+                    <div class="img_icon">
+                        <img src="img/push_image.jpg" width="100%">
+                    </div>
+                    <div class="img_icon">
+                        <img src="img/push_image.jpg" width="100%">
+                    </div>
+                    <div class="img_icon">
+                        <img src="img/push_image.jpg" width="100%">
+                    </div>
+                </div>
                 <p class="live_people">观看人数<span class="audienceCount">0</span></p>
                 <!--聊天记录-->
                 <div class="content-padded list_infomation">
+                        <div class="push_info row">
+                            <div class="opcityclose"></div>
+                            <a class="col-40">
+                                <img class="userimg" src="img/push_image.jpg" width="100%">
+                            </a>
+                            <a class="col-60">
+                                <h4 class="dsp">最新的火爆产品，买一个可以送一个，机会不容错过。</h4>
+                            </a>
+                        </div>
                     <ul class="communication" id="video_sms_list">
-                        <!--<li><span class="color_r">ad**sa 游客来了</span></li>-->
+                        <!--<li><div class="user_image pull-left">-->
+                            <!--<img src="img/push_image.jpg" width="100%">-->
+                        <!--</div><span class="color_r pull-left">ad**sa 游客来了</span></li>-->
                         <!--<li><span class="color_g">妮妮*8  正在去购买的路上</span></li>-->
                         <!--<li><span class="color_b">ad**sa 买买买</span></li>-->
                         <!--<li><span class="color_r">ad**sa 游客来了</span></li>-->
@@ -94,7 +124,7 @@
                                 <!-- 添加 class infinite-scroll 和 data-distance  向下无限滚动可不加infinite-scroll-bottom类，这里加上是为了和下面的向上无限滚动区分-->
                                 <div class="content infinite-scroll infinite-scroll-bottom" id="allList" style="height: 16rem" data-distance="100">
                                     <div class="list-block" style="margin-top: 0">
-                                        <ul class="list-container">
+                                        <ul class="list-container disable-router">
                                             <!--<li class="push_store look_buy">-->
                                                 <!--<div class="row gutter">-->
                                                     <!--<div class="col-33">-->

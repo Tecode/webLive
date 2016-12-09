@@ -59,15 +59,17 @@
         };
         delay = optionToInt(opts.throttle, 250);
         useDebounce = opts.debounce !== false;
-        unload = !!opts.unload;
+        unload = !opts.unload;
         callback = opts.callback || callback;
         echo.render();
         if (opts.container.addEventListener) {
+            debounceOrThrottle();
+            opts.container.addEventListener('load', debounceOrThrottle, false);//可能不需要
             opts.container.addEventListener('scroll', debounceOrThrottle, false);
-            opts.container.addEventListener('load', debounceOrThrottle, false);
         } else {
+            debounceOrThrottle();
+            opts.container.attachEvent('onload', debounceOrThrottle);//可能不需要
             opts.container.attachEvent('onscroll', debounceOrThrottle);
-            opts.container.attachEvent('onload', debounceOrThrottle);
         }
     };
 
