@@ -771,6 +771,24 @@ img{
 .oderlist .ordernumber{
     color: #b2b2b2;
 }
+/*详情和订单用一个css*/
+#listDetails .order_info{
+    padding: .8rem .5rem 1rem .5rem;
+    background-color: #fff;
+    border-bottom: 1px solid #fafafa;
+}
+#listDetails .haveaddress{
+    position: relative;
+}
+#listDetails .order_info h4{
+    font-weight: normal;
+}
+#listDetails .order_info .pay_nopay{
+    padding: 0 .5rem;
+    background-color: #ff6262;
+    color: #fff;
+    border-radius: .2rem;
+}
 /*点赞动画*/
 @-webkit-keyframes bounceInUp {
     from, 60%, 75%, 100%, to {

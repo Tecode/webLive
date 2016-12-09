@@ -4,7 +4,7 @@
 var icon = ['icon_gift_g', 'icon_ice', 'icon_sweet', 'icon_jewel', 'icon_gift', 'icon_heart'];
 
 var loaded = true;
-var sendGood,discription = true;
+var sendGood,discription,oderList = true;
 var pageIndex = 1;
 var linkUrl = {
     getAllListUrl:'json/allList.json',//获取边看边买列表
@@ -328,6 +328,60 @@ var fn = function () {
             $.router.load("#addaddress");
         })
     };
+    //查看订单详情
+    this.showOrderList = function () {
+        $(".oderlist .list-container").on('touchend','.detail',function () {
+            //json里面不能含空格取不到数据
+            var fillData = JSON.parse($(this).attr('data-json'));
+            console.info(fillData);
+            $('#listDetails').html('<div class="order_info"><h4>订单状态：'+(function (state) {
+                    //状态
+                    switch (state){
+                        case '1':
+                            return '<span>去付款</span>';
+                            break;
+                        case 2:
+                            return '<span>交易完成</span>';
+                            break;
+                        default:
+                            return '';
+                    }
+
+                })(fillData.orderstate)+(function (state) {
+                    switch (state){
+                        case '1':
+                            return '<span class="pull-right pay_nopay">去支付</span>';
+                            break;
+                        case '2':
+                            return '<span class="pull-right pay_nopay">去支付</span>';
+                            break;
+                        case '3':
+                            return '<span class="pull-right pay_nopay">去支付</span>';
+                            break;
+                        default:
+                            return''
+
+                    }
+                })(fillData.orderstate)+
+                '</h4><h4>订单号：'+fillData.ordernumber+'</h4><h4>下单用户：'+fillData.craateuser+'</h4><h4>下单时间：'+fillData.createtime+'</h4></div><div class="address haveaddress">'+
+                '<i class="icon icon_location"></i><div class="box"><h3>收货人：<span class="shouhuo">'+fillData.receivename+'</span>'+
+                '<span class="dianhua">1306526541</span></h3><p class="dizhi">'+fillData.receiveaddress+'</p></div></div>'+
+                '<section><h3 class="tittle">商品信息</h3><ul class="payment_list">'+(function (storeList) {
+                    var html ='';
+                    $.each(storeList,function (index,child) {
+                        html +='<li><a style="display: block" class="row"><div class="col-33"><img src="'+child.goodsimg+'" width="100%">'+
+                            '</div><div class="col-66"><div class="discription">'+child.goodsname+'</div>'+
+                            '<div class="info clearfix"><span>'+child.goodstype+'</span><span class="pull-right">￥'+child.goodsprice+' X'+child.goodscount+'</span></div></div></a></li>'
+                    });
+                    return html;
+                })(fillData.goods)+'</ul></section>'+
+                '<section class="value"><h3 class="tittle"><span>商品信息</span><span class="pull-right">'+fillData.goods.length+'件</span>'+
+                '</h3><h3 class="tittle"><span>运费</span><span class="pull-right">'+fillData.transportfee+'</span></h3><h3 class="tittle">'+
+                '<span>活动优惠</span><span class="pull-right">-10</span></h3></section>'
+            )
+
+        })
+    }
 };
 //初始化页面
 fn.prototype.initPage = function () {
@@ -654,10 +708,55 @@ var ajax = function () {
         })
     };
     //获取订单列表
-    this.getOrderList = function () {
+    this.getOrderList = function (pData) {
         this.initAjax(linkUrl.orderListUrl, 'get', pData, function (result) {
             if (result.code == 0 && result) {
+                var html ='';
+                $.each(result.data.orderlist,function (index,child) {
+                    html += '<li><h3 class="tittle clearfix"><span class="pull-left ordernumber">订单编号：'+child.ordernumber+'</span>'+
+                        '<span class="pull-right nopay">'
+                        +(function (state) {
+                            //付款状态
+                            switch (state.orderstate){
+                                case '1':
+                                    return '未支付';
+                                    break;
+                                case '2':
+                                    return '交易完成';
+                                    break;
+                                case '3':
+                                    return '已发货';
+                                    break;
+                                default:
+                                    return '';
 
+                            }
+                        })(child)
+                        +'</span></h3>'+(function (infoList) {
+                            //商品信息
+                            var html = '';
+                            $.each(infoList,function (index,el) {
+                                html +='<div class="row"><div class="col-33"><img src="'+el.goodsimg+'" width="100%">'+
+                                    '</div><div class="col-66 clearfix"><div class="discrip">'+el.goodsname+'</div>'+
+                                    '<div class="pull-left type"><span>'+el.goodstype+'</span></div><div class="pull-right text-right cmuch">'+
+                                    '<div class="much">￥'+el.goodsprice+'</div><div class="count">x'+el.goodscount+'</div></div></div></div>'
+                            });
+                            return html;
+                        })(child.goods)+'<p class="introduce text-right">共'+child.goods.length+'件商品 合计：<span style="color: #707070">￥<span class="price">'+child.totalfee+'</span></span>（含运费￥'+child.transportfee+'）</p>'+
+                        '<h3 class="text-rigth choice">'+
+                        (function (status) {
+                        //判断是否支付
+                        switch (status.orderstate){
+                            case '1':
+                                return '<span class="pay">去支付</span>';
+                            case '2':
+                                return '<span class="pay" style="margin-right: .5rem">待支付</span>';
+                            default:
+                                return '';
+                            }
+                        })(child)+'<a href="#listDetails" class="detail" data-json='+JSON.stringify(child)+'>详情</a></h3></li>';
+                        });
+                        $('#oderList').find('.list-container').html(html);
             }else {
                 $.toast(result.msg);
             }
@@ -718,7 +817,15 @@ $(document).on("pageInit", "#discription1", function (e, id, page) {
         discription = false;
     }
 });
-$(document).on("pageInit", "#discription2", function (e, id, page) {
-
+$(document).on("pageInit", "#oderList", function (e, id, page) {
+    cloudMail.getOrderList();
+    if(oderList){
+        cloudMail.showOrderList();
+        oderList = false;
+    }
+    //刷新订单是没有数据的要返回点击详情才有
+    if(window.location.toString().indexOf('listDetails')>=0){
+        history.back();
+    }
 });
 $.init();
