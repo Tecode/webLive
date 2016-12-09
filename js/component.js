@@ -4,6 +4,7 @@
 var icon = ['icon_gift_g', 'icon_ice', 'icon_sweet', 'icon_jewel', 'icon_gift', 'icon_heart'];
 
 var loaded = true;
+var sendGood,discription = true;
 var pageIndex = 1;
 var linkUrl = {
     getAllListUrl:'json/allList.json',//获取边看边买列表
@@ -13,7 +14,10 @@ var linkUrl = {
     getGoodsInfoListUrl:'json/shoppingCarList.json',//获取付款页面列表
     postadressUrl:'json/shoppingCarList.json',//保存地址
     payPageListUrl:'json/paypage.json',//付款页面商品展示
-    discriptionUrl:'json/discription.json'
+    discriptionUrl:'json/discription.json',//获取详情
+    getGoodsTypeUrl:'json/type.json',//获取商品类型
+    pushValueUrl:'',//保存商品属性
+    orderListUrl:'json/orderlist.json'//获取订单详情
 };
 var fn = function () {
     //播放直播视频
@@ -42,11 +46,21 @@ var fn = function () {
             onlineData: function () {
                 //在线人数
                 $('.audienceCount').text(arguments[0].audienceCount);
+                //点赞人数
+                $('.live .good_item').text(arguments[0].likeCount);
+                //观看人的头像
+                var imgslist ='';
+                $.each(arguments[0].imageList,function (index,child) {
+                    if(index>4) return;
+                    imgslist += '<div class="img_icon"><img src="'+child+'" width="100%"></div>';
+                });
+                $('.user').html(imgslist);
             },
             //推送活动
             activeData: function () {
                 $('.live .push_info').show();
                 $('.userimg').attr('src',arguments[0].activityImg);
+                $('.push_info a').attr('href',arguments[0].activityLink);
                 $('.dsp').text(arguments[0].activityName)
             },
             people:function () {
@@ -56,8 +70,9 @@ var fn = function () {
             //推送商品
             pushStroe:function () {
                 $('.live .push_info').show();
-                $('.userimg').attr('src',arguments[0].activityImg);
-                $('.dsp').text(arguments[0].activityName)
+                $('.push_info a').attr('href',arguments[0].goodsLink);
+                $('.userimg').attr('src',arguments[0].goodsImg);
+                $('.dsp').text(arguments[0].goodsName);
             }
 
         };
@@ -84,9 +99,21 @@ var fn = function () {
         $('#video_sms_list').append('<li><div class="user_image pull-left"><img src="'+userimg+'" width="100%">'+
             '</div><span class="' + colors[type] + ' pull-left">'+text+'</span></li>');
     };
+    //10s以后会再次发送消息
+    this.interval = function (time) {
+        setTimeout(function () {
+            sendGood = true;
+        },time*1000)
+    };
+
     //点赞动画
     this.clickGood = function () {
         $('.click_good .icon_good').on('touchend', function () {
+            if(sendGood){
+                liveim.send('1007');
+                sendGood = false;
+                cloudMail.interval(10);
+            }
             $('.click_good .icon_good').append($('<div class="animated bounceInUp icon good_icon"></div>').addClass(icon[Math.floor(Math.random() * 6)]));
 //                    <div class="animated bounceInUp icon icon_heart good_icon"></div>
         })
@@ -202,7 +229,44 @@ var fn = function () {
     };
     //商品详细信息
     this.goodsInfo = function () {
+        var postdata = {type:0};
+        $('.discription .type').on('touchend','span',function () {
+            if($(this).hasClass('valueactive')){
+                $(this).removeClass('valueactive');
+            }else {
+                $(this).addClass('valueactive')
+                    .siblings('span').removeClass('valueactive')
+            }
 
+            if($('.type li').length == $('.type .valueactive').length){
+                var toltalMuch =null;
+                $('.type .valueactive').each(function (index,child){
+                    toltalMuch += parseFloat($(child).attr('data-price'));
+                });
+                $('.store_much').text(parseFloat(goodsPrice)+toltalMuch);
+            }else{
+                $('.store_much').text(parseFloat(goodsPrice));
+            }
+        });
+        //立即购买还是加入购物车
+        $('.choice_btn a').on('touchend',function () {
+            postdata.value =$(this).index();
+        });
+        //确定属性
+        $('.submitbuttom').on('touchend',function () {
+            if($('.type li').length == $('.type .valueactive').length){
+                var ids ='';
+                $('.type .valueactive').each(function (index,child) {
+                    ids += $(child).attr('data-id')+',';
+                });
+                postdata.ids = ids.substring(0,ids.length-1);
+                postdata.goodsId = goodsId;
+                console.info(postdata);
+                cloudMail.pushValue(postdata);
+            }else {
+                $.toast('还有属性未选择！')
+            }
+        })
     };
     //填写地址
     this.addAdress = function () {
@@ -267,9 +331,6 @@ var fn = function () {
 };
 //初始化页面
 fn.prototype.initPage = function () {
-    $('.float_box #send').on('touchend', function () {
-        //liveim.send(cloudMail.infoBody({type:1000,content:$('#speek').val()}))
-    });
     var mySwiper2 = new Swiper('#swiper-container2', {
         slidesPerView: 2,
         onTap: function () {
@@ -300,7 +361,7 @@ fn.prototype.initPage = function () {
         $('.push_info').hide();
     });
     //点击发送消息
-    $('#send').on('touchend',function () {
+    $('.float_box #send').on('touchend',function () {
         if($(this).siblings('#speek').val()==''){
             $.toast("发送的消息不能为空哦");
         }else{
@@ -401,7 +462,7 @@ var ajax = function () {
                 var html = '';
                 var listData = result.data;
                 for (var i = 0; i < listData.length; i++) {
-                    html += '<li class="push_store look_buy"><a href="description.html" class="row gutter"><div class="col-33">' +
+                    html += '<li class="push_store look_buy"><a href="description.html" class="row gutter external"><div class="col-33">' +
                         '<img src="img/loading.gif" data-echo="' + listData[i].goodsImg + '" width="100%"></div><div class="col-66"><div class="discrip">' + listData[i].goodsName +
                         '</div><div class="pull-left"><div class="count">' + listData[i].goodsStock + '</div>' +
                         '<div class="much">￥' + listData[i].goodsPrice + '</div></div><div class="pull-right"><span class="icon-shopcar"></span></div></div></a></li>';
@@ -522,16 +583,28 @@ var ajax = function () {
     this.discription = function (pData) {
         this.initAjax(linkUrl.discriptionUrl, 'get', pData, function (result) {
             if (result.code == 0 && result) {
+                goodsId = result.data.goodsId;//定义成了全局变量使用完清除
+                goodsPrice = result.data.goodsPrice;//定义成了全局变量使用完清除
                 $('.allpage').text(result.data.goodsImgList.length);
                 var banner = '';
                 $.each(result.data.goodsImgList,function (index,child) {
                     banner +='<div class="swiper-slide"><img src="'+child+'" width="100%" alt=""></div>';
                 });
-                $('.swiper-wrapper').html(banner);
+                $('#banner').find('.swiper-wrapper').html(banner);
+                //轮播
+                var navbanner = new Swiper('#banner', {
+                    onSlideChangeEnd: function(swiper){
+                        $('.activepage').text(swiper.activeIndex+1);
+                    }
+                });
                 //文字描述
                 $('.discription_text').html(
                     '<dl class="content-padded"><dd class="color-default" style="font-size: .9rem">'+result.data.goodsName+'</dd>'+
                     '<dd class="color-danger">喜欢就买吧，机会不容错过哦！</dd><dt><span class="big color-danger">￥'+result.data.goodsPrice+'</span><span class="del">库存剩余'+result.data.goodsStock+'</span></dt></dl>'
+                );
+                //属性文字描述
+                $('.discription_text_next').html('<dl class="content-padded"><dd class="color-default" style="font-size: .9rem">'+result.data.goodsName+'</dd>'+
+                    '<dt><span class="big color-danger">￥<span class=store_much>'+result.data.goodsPrice+'</span></span><span class="del">库存剩余'+result.data.goodsStock+'</span></dt></dl>'
                 );
                 //图片描述
                 var images = '';
@@ -539,13 +612,51 @@ var ajax = function () {
                     images += '<img alt="" src="'+child.goodsDecImg+'" width="100%">'
                 });
                 $('.box-img').html(images);
-                //轮播
-                    var navbanner = new Swiper('#banner', {
-                        speed: 200,
-                        onSlideChangeEnd: function(swiper){
-                            $('.activepage').text(swiper.activeIndex+1);
-                        }
-                    });
+
+            }else {
+                $.toast(result.msg);
+            }
+        })
+    };
+    //获取商品属性
+    this.getGoodsType = function (pData) {
+        this.initAjax(linkUrl.getGoodsTypeUrl, 'get', pData, function (result) {
+            if (result.code == 0 && result) {
+                console.info(result.data.catagory);
+                var typelist ='';
+        //循环商品属性
+                $.each(result.data.catagory,function (index,child) {
+                    typelist +='<li><div class="heard_tips">'+child.name+'</div><div class="value">'+(function () {
+                            var type = '';
+                            $.each(child.attributevalue,function (index,el) {
+                                type += '<span data-id="'+el.id+'" data-count="'+el.count+'" data-price="'+el.price+'">'+el.name+'</span>'
+                            });
+                            return type;
+                        })()+'</div></li>'
+                });
+                $('#discription2').find('.type').html(typelist);
+            }else {
+                $.toast(result.msg);
+            }
+        })
+    };
+    //保存添加的属性type=0是加入购物车type=1是立即购买
+    this.pushValue = function (pData) {
+        this.initAjax(linkUrl.pushValueUrl, 'get', pData, function (result) {
+            if (result.code == 0 && result) {
+                $.toast('保存成功');
+                delete goodsId;
+                delete goodsPrice;
+                //$.router.back();//返回上一页
+            }else {
+                $.toast(result.msg);
+            }
+        })
+    };
+    //获取订单列表
+    this.getOrderList = function () {
+        this.initAjax(linkUrl.orderListUrl, 'get', pData, function (result) {
+            if (result.code == 0 && result) {
 
             }else {
                 $.toast(result.msg);
@@ -601,5 +712,13 @@ $(document).on("pageInit", "#payment", function (e, id, page) {
 });
 $(document).on("pageInit", "#discription1", function (e, id, page) {
     cloudMail.discription();
+    cloudMail.getGoodsType();
+    if(discription){
+        cloudMail.goodsInfo();
+        discription = false;
+    }
+});
+$(document).on("pageInit", "#discription2", function (e, id, page) {
+
 });
 $.init();

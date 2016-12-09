@@ -231,6 +231,16 @@ img{
 .live .click_good .click_good div{
 
 }
+.live .good_item{
+    position: absolute;
+    top:-.8rem;
+    right: .6rem;
+    background-color: rgba(10,10,10,.5);
+    color: #fff;
+    font-size: .7rem;
+    padding: 0 .5rem;
+    border-radius: 999px;
+}
 /*推送商品*/
 .live .goods_box{
     position: absolute;
