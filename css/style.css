@@ -584,13 +584,13 @@ img{
 .payment section h3{
     font-size: .9rem;
     font-weight: normal;
-    border-bottom: 1px solid #ededed;
+    border-bottom: 1px solid #fafafa;
     padding: .4rem 0;
     margin-left: .5rem;
 }
 .payment .payment_list li{
     padding-bottom: .5rem;
-    border-bottom: 1px solid #ededed;
+    border-bottom: 1px solid #fafafa;
     margin-left: .5rem;
 }
 .payment .payment_list .col-33{

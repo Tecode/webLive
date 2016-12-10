@@ -17,20 +17,21 @@ var linkUrl = {
     discriptionUrl:'json/discription.json',//获取详情
     getGoodsTypeUrl:'json/type.json',//获取商品类型
     pushValueUrl:'',//保存商品属性
-    orderListUrl:'json/orderlist.json'//获取订单详情
+    orderListUrl:'json/orderlist.json',//获取订单详情
+    returGoodsUrl:''//退款地址
 };
 var fn = function () {
     //播放直播视频
     this.player = function () {
         var option = {
-            "live_url": "http://5219.liveplay.myqcloud.com/live/5219_205.flv?roomid=GWdIRS0eSvg=",
-            "live_url2": "http://5219.liveplay.myqcloud.com/live/5219_205.flv?roomid=GWdIRS0eSvg=",
-            "width": $(window).width(),
-            "height": $(window).height()
-            //...可选填其他属性
+            "m3u8": "http://2157.liveplay.myqcloud.com/2157_358535a.m3u8",
+            "flv": "2157.liveplay.myqcloud.com/live/2157_358535a.flv", //增加了一个flv的播放地址，用于PC平台的播放
+            "autoplay" : true,      //iOS下safari浏览器是不开放这个能力的
+            "coverpic" : "http://www.test.com/myimage.jpg",
+            "width" :  $(window).width(),//视频的显示宽度，请尽量使用视频分辨率宽度
+            "height" : $(window).height()//视频的显示高度，请尽量使用视频分辨率高度
         };
-
-        var player = new qcVideo.Player("id_video_container", option);
+        var player =  new TcPlayer('id_test_video',option);
         //消息
         var iminfo = {
             logininfo: {
@@ -330,33 +331,26 @@ var fn = function () {
     };
     //查看订单详情
     this.showOrderList = function () {
+        //填充数据
         $(".oderlist .list-container").on('touchend','.detail',function () {
             //json里面不能含空格取不到数据
             var fillData = JSON.parse($(this).attr('data-json'));
-            console.info(fillData);
             $('#listDetails').html('<div class="order_info"><h4>订单状态：'+(function (state) {
-                    //状态
                     switch (state){
                         case '1':
-                            return '<span>去付款</span>';
-                            break;
-                        case 2:
-                            return '<span>交易完成</span>';
-                            break;
-                        default:
-                            return '';
-                    }
-
-                })(fillData.orderstate)+(function (state) {
-                    switch (state){
-                        case '1':
-                            return '<span class="pull-right pay_nopay">去支付</span>';
+                            return '<span class="pull-right" style="color:#ff5757">待付款</span>';
                             break;
                         case '2':
-                            return '<span class="pull-right pay_nopay">去支付</span>';
+                            return '<span class="pull-right" style="color: #ff9446">待发货</span>';
                             break;
                         case '3':
-                            return '<span class="pull-right pay_nopay">去支付</span>';
+                            return '<span class="pull-right" style="color: #ff9446">待收货</span>';
+                            break;
+                        case '4':
+                            return '<span class="pull-right" style="color: #ff5757">可以申请退款</span>';
+                            break;
+                        case '5':
+                            return '<span class="pull-right" style="color: #ff9446">完成订单</span>';
                             break;
                         default:
                             return''
@@ -371,7 +365,7 @@ var fn = function () {
                     $.each(storeList,function (index,child) {
                         html +='<li><a style="display: block" class="row"><div class="col-33"><img src="'+child.goodsimg+'" width="100%">'+
                             '</div><div class="col-66"><div class="discription">'+child.goodsname+'</div>'+
-                            '<div class="info clearfix"><span>'+child.goodstype+'</span><span class="pull-right">￥'+child.goodsprice+' X'+child.goodscount+'</span></div></div></a></li>'
+                            '<div class="info clearfix"><span>'+child.goodstype+'</span><span class="pull-right" style="margin-right: .5rem;color:#505050;">￥'+child.goodsprice+' X'+child.goodscount+'</span></div></div></a></li>'
                     });
                     return html;
                 })(fillData.goods)+'</ul></section>'+
@@ -380,7 +374,20 @@ var fn = function () {
                 '<span>活动优惠</span><span class="pull-right">-10</span></h3></section>'
             )
 
-        })
+        });
+        //判断付款
+        $('.list-container').on('touchend','.choice .topay',function () {
+                var data = JSON.parse($(this).siblings().attr('data-json'));
+                cloudMail.toPay({orderid:data.orderid})
+        });
+        //判断退货
+        $('.list-container').on('touchend','.choice .returnGoods',function () {
+            var self = this;
+            $.confirm('确定申请退款吗?', function () {
+                var data = JSON.parse($(self).siblings().attr('data-json'));
+                cloudMail.returGoods({orderid:data.orderid})
+            });
+        });
     }
 };
 //初始化页面
@@ -562,7 +569,8 @@ var ajax = function () {
             this.initAjax(linkUrl.toPayUrl, 'get', pData, function (result) {
                 if (result.code == 0 && result) {
                     //跳转到付款页面
-                    $.router.load("#payment");
+                    alert('处理付款');
+                    //$.router.load("#payment");
                 }else {
                     $.toast(result.msg);
                 }
@@ -722,10 +730,16 @@ var ajax = function () {
                                     return '未支付';
                                     break;
                                 case '2':
-                                    return '交易完成';
+                                    return '<span style="color: #ff9446">待发货</span>';
                                     break;
                                 case '3':
-                                    return '已发货';
+                                    return '<span style="color: #ff9446">待收货</span>';
+                                    break;
+                                case '4':
+                                    return '退货';
+                                    break;
+                                case '5':
+                                    return '<span style="color: #ff9446">完成订单</span>';
                                     break;
                                 default:
                                     return '';
@@ -748,15 +762,30 @@ var ajax = function () {
                         //判断是否支付
                         switch (status.orderstate){
                             case '1':
-                                return '<span class="pay">去支付</span>';
+                                return '<span class="pay topay" style="margin-right: .5rem">去支付</span>';
                             case '2':
-                                return '<span class="pay" style="margin-right: .5rem">待支付</span>';
+                                return '';
+                            case '3':
+                                return '';
+                            case '4':
+                                return '<span class="returnGoods pay" style="margin-right: .5rem;background-color: #ff9446">申请退款</span>';
                             default:
                                 return '';
                             }
                         })(child)+'<a href="#listDetails" class="detail" data-json='+JSON.stringify(child)+'>详情</a></h3></li>';
                         });
                         $('#oderList').find('.list-container').html(html);
+            }else {
+                $.toast(result.msg);
+            }
+        })
+    };
+    //退款
+    this.returGoods = function (pData) {
+        console.info(pData)
+        this.initAjax(linkUrl.returGoodsUrl, 'get', pData, function (result) {
+            if (result.code == 0 && result) {
+                $.toast(result.msg);
             }else {
                 $.toast(result.msg);
             }
@@ -773,6 +802,7 @@ setInterval(function () {
 $(document).on("pageInit", "#pageIndex", function (e, id, page) {
     cloudMail.initPage();
     cloudMail.clickGood();
+    cloudMail.player();
     loaded = true;
 });
 //购物车
