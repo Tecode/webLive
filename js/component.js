@@ -430,6 +430,12 @@ var fn = function () {
                 '<a href="' + child.goodsLink + '">去看看></a></div></div></div></li>'
         });
         $('#recommendList').find('.list-container').html(html);
+    };
+    //调用方法请求ajax微信支付
+    this.wechatPay = function () {
+        $('#payment').find('.nav_footer .btn-red').on('touchend',function () {
+            cloudMail.wechatPayAjax();
+        })
     }
 };
 //初始化页面
@@ -612,12 +618,56 @@ var ajax = function () {
         this.initAjax(linkUrl.toPayUrl, 'get', pData, function (result) {
             if (result.code == 0 && result) {
                 //跳转到付款页面
-
+                
                 $.router.load("#payment");
             } else {
                 $.toast(result.msg);
             }
         })
+    };
+    //微信支付付款
+    this.wechatPayAjax = function (pData) {
+        this.initAjax(linkUrl.wechatPayAjaxUrl, 'get', pData, function (result) {
+            if (result.code == 0 && result) {
+                //请求支付的js
+            } else {
+                $.toast(result.msg);
+            }
+        })
+    };
+    //微信支付接口
+    this.wechatPay = function () {
+        WeixinJSBridge.invoke(
+            'getBrandWCPayRequest', paydata,
+            function (res) {
+                //支付成功回调
+                if (res.err_msg == "get_brand_wcpay_request：ok") {
+                    $.ajax({
+                        url: "/VIPuser/WXuser/UserPaystate",
+                        type: "post",
+                        datatype: "json",
+                        data: { out_trade_no: out_trade_no },
+                        success: function (result) {
+                            if (result.code == 0) {
+                                //$('.weui_dialog_alert').show()
+                                var data = $(".checked").attr("data-value") || $o_money.val();
+                                dialog.showAlert({ title: "提示", content: "充值:" + data + " 元成功.", autoClose: false });
+                                window.location.href("/vipuser/wxuser/userindx");
+                            }
+                        }
+                    });
+                }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+            }
+        );
+        //微信支付判断
+        if (typeof WeixinJSBridge == "undefined") {
+            if (document.addEventListener) {
+                document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+            } else if (document.attachEvent) {
+                document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+            }
+        }
     };
     //商品信息
     this.getGoodsInfoList = function () {
@@ -879,7 +929,6 @@ var ajax = function () {
     };
     //加减商品数量
     this.postCarNumber = function (pData) {
-        console.info(pData)
         this.initAjax(linkUrl.postCarNumberUrl, 'post', pData, function (result) {
             if (result.code == 0 && result) {
 
@@ -901,7 +950,6 @@ $(document).on("pageInit", "#pageIndex", function (e, id, page) {
         cloudMail.scorllText();
         start ++;
     },600);
-    cloudMail.scorllText();
     //获取数量显示在购物车
     $('#pageIndex').find('.shopping').text("购物车(" + cloudMail.getCookie('cartcount') + ")");
     cartcount = cloudMail.getCookie('cartcount');
@@ -937,6 +985,7 @@ $(document).on("pageInit", '#shoppingCar', function (e, pageId, $page) {
     }
 });
 $(document).on("pageInit", "#payment", function (e, id, page) {
+    cloudMail.wechatPay();
     //重新获取订单ajax方法
     cloudMail.payPageAjax();
     //清空地址
