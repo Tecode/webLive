@@ -4,7 +4,8 @@
 var icon = ['icon_gift_g', 'icon_ice', 'icon_sweet', 'icon_jewel', 'icon_gift', 'icon_heart'];
 
 var loaded = true;
-var sendGood,discription,oderList = true;
+var sendGood,oderList = true;
+var discription =true;
 var pageIndex = 1;
 var linkUrl = {
     getAllListUrl:'json/allList.json',//获取边看边买列表
@@ -241,9 +242,12 @@ var fn = function () {
 
             if($('.type li').length == $('.type .valueactive').length){
                 var toltalMuch =null;
+                var count = [];
                 $('.type .valueactive').each(function (index,child){
                     toltalMuch += parseFloat($(child).attr('data-price'));
+                    count.push(parseFloat($(child).attr('data-count')))
                 });
+                $('.del').text('库存剩余'+Math.min.apply('',count));
                 $('.store_much').text(parseFloat(goodsPrice)+toltalMuch);
             }else{
                 $('.store_much').text(parseFloat(goodsPrice));
@@ -262,7 +266,6 @@ var fn = function () {
                 });
                 postdata.ids = ids.substring(0,ids.length-1);
                 postdata.goodsId = goodsId;
-                console.info(postdata);
                 cloudMail.pushValue(postdata);
             }else {
                 $.toast('还有属性未选择！')
@@ -691,7 +694,19 @@ var ajax = function () {
                     typelist +='<li><div class="heard_tips">'+child.name+'</div><div class="value">'+(function () {
                             var type = '';
                             $.each(child.attributevalue,function (index,el) {
-                                type += '<span data-id="'+el.id+'" data-count="'+el.count+'" data-price="'+el.price+'">'+el.name+'</span>'
+                                type += '<span class='+(function () {
+                                        if(el.count == 0){
+                                            return 'novalue';
+                                        }else {
+                                            return '';
+                                        }
+                                    })()+' style="'+(function () {
+                                        if(el.count == 0){
+                                            return 'pointer-events:none';
+                                        }else {
+                                            return '';
+                                        }
+                                    })()+'" data-id="'+el.id+'" data-count="'+el.count+'" data-price="'+el.price+'">'+el.name+'</span>'
                             });
                             return type;
                         })()+'</div></li>'
@@ -782,7 +797,6 @@ var ajax = function () {
     };
     //退款
     this.returGoods = function (pData) {
-        console.info(pData)
         this.initAjax(linkUrl.returGoodsUrl, 'get', pData, function (result) {
             if (result.code == 0 && result) {
                 $.toast(result.msg);
@@ -790,6 +804,21 @@ var ajax = function () {
                 $.toast(result.msg);
             }
         })
+    };
+    //设置cookies
+    this.setCookie = function(name,value){
+        var Days = 30;
+        var exp = new Date();
+        exp.setTime(exp.getTime() + Days*24*60*60*1000);
+        document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+    };
+    //读取cookie
+    this.getCookie = function(name){
+        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+        if(arr=document.cookie.match(reg))
+            return unescape(arr[2]);
+        else
+            return null;
     }
 };
 var cloudMail = new fn;
@@ -800,6 +829,9 @@ setInterval(function () {
 
 //直播页面
 $(document).on("pageInit", "#pageIndex", function (e, id, page) {
+    //获取数量显示在购物车
+    $('#pageIndex').find('.shopping').text("购物车("+cloudMail.getCookie('cartcount')+")");
+    cartcount = cloudMail.getCookie('cartcount');
     cloudMail.initPage();
     cloudMail.clickGood();
     cloudMail.player();
