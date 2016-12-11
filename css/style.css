@@ -16,6 +16,20 @@ img{
 .live .swiper-wrapper .swiper-slide{
     font-size: .9rem;
 }
+.live .showOrderlist{
+    display: block;
+    position: fixed;
+    top:40%;
+    right: 0;
+    background:url("../img/orders.png")0 0 no-repeat;
+    background-size: 40px;
+    width: 40px;
+    height: 40px;
+    font-size: .75rem;
+    color: #fff;
+    margin-right: .5rem;
+    z-index: 3;
+}
 .live .video_box img{
     display: block;
 }

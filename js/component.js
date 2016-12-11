@@ -28,14 +28,13 @@ var fn = function () {
     //播放直播视频
     this.player = function () {
         var option = {
-            "m3u8": "http://2157.liveplay.myqcloud.com/2157_358535a.m3u8",
-            "flv": "2157.liveplay.myqcloud.com/live/2157_358535a.flv", //增加了一个flv的播放地址，用于PC平台的播放
-            "autoplay": true,      //iOS下safari浏览器是不开放这个能力的
-            "coverpic": "http://www.test.com/myimage.jpg",
-            "width": $(window).width(),//视频的显示宽度，请尽量使用视频分辨率宽度
-            "height": $(window).height()//视频的显示高度，请尽量使用视频分辨率高度
+            "live_url" : "http://2157.liveplay.myqcloud.com/2157_358535a.m3u8",
+            "live_url2" : "http://2000.liveplay.myqcloud.com/live/2000_2a1.flv",
+            "width" : $(window).width(),
+            "height" : $(window).height()
         };
-        var player = new TcPlayer('id_test_video', option);
+
+        var player = new qcVideo.Player("id_video_container", option);
         //消息
         var iminfo = {
             logininfo: {
@@ -436,7 +435,7 @@ var fn = function () {
         $('#payment').find('.nav_footer .btn-red').on('touchend',function () {
             cloudMail.wechatPayAjax();
         })
-    }
+    };
 };
 //初始化页面
 fn.prototype.initPage = function () {
@@ -618,7 +617,8 @@ var ajax = function () {
         this.initAjax(linkUrl.toPayUrl, 'get', pData, function (result) {
             if (result.code == 0 && result) {
                 //跳转到付款页面
-                
+                var shopcount = cloudMail.getCookie('cartcount');
+                cloudMail.setCookie('cartcount',shopcount-1);
                 $.router.load("#payment");
             } else {
                 $.toast(result.msg);
@@ -711,10 +711,10 @@ var ajax = function () {
                     $('.haveaddress').show();
                     $('.noaddress').hide();
                     //填充地址
-                    $("input[name*='name']").val(result.data.orderlist[0].receivename);
-                    $("input[name*='phone']").val(result.data.orderlist[0].receivephone);
-                    $("input[name*='area']").val(result.data.orderlist[0].receivearea);
-                    $("input[name*='address']").val(result.data.orderlist[0].receiveaddress);
+                    $("input[name='name']").val(result.data.orderlist[0].receivename);
+                    $("input[name='phone']").val(result.data.orderlist[0].receivephone);
+                    $("input[name='area']").val(result.data.orderlist[0].receivearea);
+                    $("input[name='address']").val(result.data.orderlist[0].receiveaddress);
                     //显示地址
                     $('.payment .shouhuo').text(result.data.orderlist[0].receivename);
                     $('.payment .dianhua').text(result.data.orderlist[0].receivephone);
@@ -922,7 +922,6 @@ var ajax = function () {
         if($('.scroll_text').text().length>8){
             scrollText = $('.scroll_text').text();//！！全局变量
             scrollText = scrollText.substring(1);
-            console.info(scrollText);
                 $('.scroll_text').text(scrollText+scrollText.substring(0,1));
 
         }
