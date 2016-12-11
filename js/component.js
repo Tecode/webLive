@@ -6,7 +6,6 @@ var icon = ['icon_gift_g', 'icon_ice', 'icon_sweet', 'icon_jewel', 'icon_gift', 
 var loaded = true;
 var sendGood, oderList = true;
 var discription = true;
-var pushList = [];
 var pageIndex = 1;
 var start = 0;
 var linkUrl = {
@@ -62,10 +61,18 @@ var fn = function () {
             },
             //推送活动
             activeData: function () {
+                arguments[0].time = parseInt(new Date().getTime());
+                var arr =[];
+                arr.push(arguments[0]);
+
                 $('.live .push_info').show();
                 $('.userimg').attr('src', arguments[0].activityImg);
                 $('.push_info a').attr('href', arguments[0].activityLink);
-                $('.dsp').text(arguments[0].activityName)
+                $('.dsp').text(arguments[0].activityName);
+
+                var pushList = arr.concat(cloudMail.getCookie('pushList'));
+                cloudMail.setCookie('pushList',pushList);
+                cloudMail.pushGoodsList(0);
             },
             people: function () {
                 //进来的人
@@ -73,21 +80,19 @@ var fn = function () {
             },
             //推送商品
             pushStroe: function () {
+                arguments[0].time = parseInt(new Date().getTime());
+                var arr =[];
+                arr.push(arguments[0]);
+
                 $('.live .push_info').show();
                 $('.push_info a').attr('href', arguments[0].goodsLink);
                 $('.userimg').attr('src', arguments[0].goodsImg);
                 $('.dsp').text(arguments[0].goodsName);
-                // {
-                //     goodsid: 1,
-                //         goodsimg: "www.baidu.com",
-                //     goodsLink: "www.baidu.com",
-                //     goodsName: "商品",
-                //     time: 1481890411319
-                // }
-                arguments[0].time = parseInt(new Date().getTime());
-                pushList = arguments[0].concat(pushList);
+
+                var pushList = arr.concat(cloudMail.getCookie('pushList'));
+
                 cloudMail.setCookie('pushList',pushList);
-                cloudMail.pushGoodsList();
+                cloudMail.pushGoodsList(1);
             }
 
         };
@@ -437,9 +442,27 @@ var fn = function () {
                         return m + '分钟前'
                     }
                 })() + '</p><div class="row gutter">' +
-                '<div class="col-33"><img src="' + child.goodsimg + '"></div><div class="col-66"><div class="discrip">' + child.goodsName + '</div>' +
+                '<div class="col-33"><img src="' + (function () {
+                    if(child.goodsImg=='undefined'){
+                        return child.activityImg;
+                    }else {
+                        return child.goodsImg;
+                    }
+                })() + '"></div><div class="col-66"><div class="discrip">' + (function () {
+                    if(child.goodsName=='undefined'){
+                        return child.activityName;
+                    }else {
+                        return child.goodsName;
+                    }
+                })() + '</div>' +
                 '<div class="pull-left"></div><div class="pull-right">' +
-                '<a href="' + child.goodsLink + '">去看看></a></div></div></div></li>'
+                '<a href="' + (function () {
+                    if(child.goodsLink=='undefined'){
+                        return child.activityLink;
+                    }else {
+                        return child.goodsLink;
+                    }
+                })() + '">去看看></a></div></div></div></li>'
         });
         $('#recommendList').find('.list-container').html(html);
     };
@@ -941,7 +964,6 @@ var ajax = function () {
     };
     //加减商品数量
     this.postCarNumber = function (pData) {
-        console.info(pData)
         this.initAjax(linkUrl.postCarNumberUrl, 'post', pData, function (result) {
             if (result.code == 0 && result) {
 
@@ -966,8 +988,7 @@ $(document).on("pageInit", "#pageIndex", function (e, id, page) {
     //获取数量显示在购物车
     $('#pageIndex').find('.shopping').text("购物车(" + cloudMail.getCookie('cartcount') + ")");
     cartcount = cloudMail.getCookie('cartcount');
-    console.info();
-    //cloudMail.pushGoodsList();
+    cloudMail.pushGoodsList();
     cloudMail.initPage();
     cloudMail.clickGood();
     cloudMail.player();
