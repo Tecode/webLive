@@ -85,7 +85,7 @@ var fn = function () {
                 //     time: 1481890411319
                 // }
                 arguments[0].time = parseInt(new Date().getTime());
-                pushList.push(arguments[0]);
+                pushList = arguments[0].concat(pushList);
                 cloudMail.setCookie('pushList',pushList);
                 cloudMail.pushGoodsList();
             }
@@ -96,6 +96,7 @@ var fn = function () {
         liveim.login(iminfo);
 
     };
+    //数组
     //显示消息
     this.showListInfo = function (type, text, userimg) {
         var maxDisplayMsgCount = 6;
@@ -134,6 +135,14 @@ var fn = function () {
     };
     //继承ajax方法
     ajax.call(this, '');
+    //获取修改以后的商品数量
+    this.toltalShopCarCount = function () {
+        var sum = 0;
+        $('#shoppingCar').find('.shopcar_list input').each(function (index,child) {
+            sum += parseInt($(child).val());
+        });
+        return sum;
+    };
     //购物车
     this.shoppingCar = function () {
         var maxCount = 0;
@@ -169,7 +178,7 @@ var fn = function () {
             var attrData = JSON.parse($(this).siblings('input').attr('data-value'));
             var value = $(this).siblings('input').val();
             value--;
-            cloudMail.postCarNumber({cid:attrData.cid,gid:attrData.gid,value:value});
+            // cloudMail.postCarNumber({cid:attrData.cid,gid:attrData.gid,value:value});
             value < 1 ? (function () {
                 $.toast("商品数量不能小于1！");
             })() : '';
@@ -177,6 +186,7 @@ var fn = function () {
             $(this).siblings('input').val(value);
             //计算数量
             toltal();
+            cloudMail.postCarNumber({totalCount:cloudMail.toltalShopCarCount()});
 
         });
         //键盘输入
@@ -190,6 +200,8 @@ var fn = function () {
                 $(this).val(maxCount);
                 $.toast("不能大于商品的库存量！");
             }
+
+            cloudMail.postCarNumber({totalCount:cloudMail.toltalShopCarCount()});
         });
         //增加商品
         clickBox.on('touchend', '.shopcar .list-container .icon_add', function () {
@@ -197,13 +209,14 @@ var fn = function () {
             maxCount = attrData.gstock;
             var value = $(this).siblings('input').val();
             value++;
-            cloudMail.postCarNumber({cid:attrData.cid,gid:attrData.gid,value:value});
+            // cloudMail.postCarNumber({cid:attrData.cid,gid:attrData.gid,value:value});
             value > maxCount ? (function () {
                 $.toast("不能大于商品的库存量！");
             })() : '';
             value = value > maxCount ? maxCount : value;
             $(this).siblings('input').val(value);
             toltal();
+            cloudMail.postCarNumber({totalCount:cloudMail.toltalShopCarCount()});
         });
         //全部选择
         $('.nav_footer .choice_btn .icon_nochoice').on('touchend', function () {
@@ -928,6 +941,7 @@ var ajax = function () {
     };
     //加减商品数量
     this.postCarNumber = function (pData) {
+        console.info(pData)
         this.initAjax(linkUrl.postCarNumberUrl, 'post', pData, function (result) {
             if (result.code == 0 && result) {
 
@@ -952,6 +966,7 @@ $(document).on("pageInit", "#pageIndex", function (e, id, page) {
     //获取数量显示在购物车
     $('#pageIndex').find('.shopping').text("购物车(" + cloudMail.getCookie('cartcount') + ")");
     cartcount = cloudMail.getCookie('cartcount');
+    console.info();
     //cloudMail.pushGoodsList();
     cloudMail.initPage();
     cloudMail.clickGood();
